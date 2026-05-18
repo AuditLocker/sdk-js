@@ -59,9 +59,11 @@ jobs:
         run: |
           VER="$(grep -E '^speakeasyVersion:' .speakeasy/workflow.yaml | awk '{print $2}')"
           if [ -z "$VER" ]; then echo "::error::speakeasyVersion not found in workflow.yaml"; exit 1; fi
-          curl -fsSL https://go.speakeasy.com/cli-install.sh | sh -s -- -b "$HOME/.local/bin" "v$VER"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          "$HOME/.local/bin/speakeasy" --version
+          # The installer picks its own writable bin dir (on GH runners that is
+          # /usr/local/bin, already on PATH) and ignores a -b override here —
+          # so resolve via PATH rather than a hardcoded install path.
+          curl -fsSL https://go.speakeasy.com/cli-install.sh | sh -s -- "v$VER"
+          speakeasy --version
 
       - name: Regenerate
         env:
