@@ -1,8 +1,14 @@
 configVersion: 2.0.0
 generation:
   devContainers:
-    enabled: true
-    schemaPath: .speakeasy/out.openapi.yaml
+    # Disabled: the generated .devcontainer is Speakeasy's consumer "SDK
+    # Sandbox" (Codespaces try-it). Its base image is pinned to an EOL Node
+    # and its setup.sh uses `npm install --ignore-scripts`, both hardcoded in
+    # the Speakeasy template (devContainers exposes only enabled/schemaPath —
+    # no image/Node/pm knob). That contradicts this repo's Node >=22 floor
+    # and pnpm supply-chain lockdown and cannot be fixed in place, so the
+    # sandbox is dropped rather than carried as a misleading surface.
+    enabled: false
   sdkClassName: AuditLocker
   maintainOpenAPIOrder: true
   usageSnippets:
