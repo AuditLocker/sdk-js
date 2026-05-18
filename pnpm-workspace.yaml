@@ -34,6 +34,18 @@ strictDepBuilds: true
 onlyBuiltDependencies:
   - esbuild # platform binary download (via vitest → vite → esbuild)
 
+# Acknowledged but NOT built — their lifecycle scripts are deliberately not
+# run (keeps the build surface minimal; clears ERR_PNPM_IGNORED_BUILDS
+# without granting them script execution). Both arrive via wrangler (Workers
+# smoke). workerd ships its runtime binary via per-platform
+# optionalDependencies (@cloudflare/workerd-*), so its install.js postinstall
+# is not required; sharp's native image build is never exercised by the
+# import/construct smoke. If a clean-CI run shows workerd cannot resolve its
+# binary without the postinstall, promote `workerd` to onlyBuiltDependencies.
+ignoredBuiltDependencies:
+  - workerd
+  - sharp
+
 # Peer dep mismatches are real bugs.
 autoInstallPeers: false
 strictPeerDependencies: true
