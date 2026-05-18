@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [
+    "src",
+    "docs",
+    "examples",
+    ".devcontainer",
+    ".speakeasy",
+    "USAGE.md",
+    "FUNCTIONS.md",
+    "RUNTIMES.md",
+    "CONTRIBUTING.md",
+    "README.md",
+    "jsr.json",
+    "package.json",
+    "tsconfig.json",
+    ".npmignore",
+    "pnpm-lock.yaml"
+  ],
+  "singleQuote": true,
+  "semi": false
+}

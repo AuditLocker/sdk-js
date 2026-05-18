@@ -1,0 +1,19 @@
+workflowVersion: 1.0.0
+# Pinned deliberately — Speakeasy ships near-daily. Bumping this is its own
+# reviewed change.
+speakeasyVersion: 1.763.1
+sources:
+    AuditLocker API:
+        inputs:
+            # Speakeasy API registry — the SDK generation source, gated behind
+            # the Speakeasy workspace API key (SPEAKEASY_API_KEY). Maintainers
+            # regenerate; see AGENTS.md. No `registry:` push block: this repo
+            # consumes the spec, it does not publish it — a push block would
+            # re-resolve this SDK's bundle and overwrite the upstream-published
+            # `latest` revision.
+            - location: registry.speakeasyapi.dev/auditlocker/auditlocker/audit-locker-api
+        output: .speakeasy/out.openapi.yaml
+targets:
+    audit-locker:
+        target: typescript
+        source: AuditLocker API

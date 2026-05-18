@@ -1,0 +1,1116 @@
+openapi: 3.1.0
+info:
+  title: AuditLocker API
+  version: 1.0.0
+  description: Audit event ingest and query API for compliance-ready logging.
+  contact:
+    name: AuditLocker Support
+    url: https://auditlocker.co
+    email: support@auditlocker.co
+  license:
+    name: Proprietary
+components:
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: Project API key in the format `al_{environment_slug}_{prefix}_{random}` (e.g. `al_production_…`, `al_sandbox_…`). Include in the Authorization header as `Bearer <api_key>`.
+  schemas:
+    ProblemDetails:
+      type: object
+      required:
+        - type
+        - title
+        - status
+      properties:
+        type:
+          type: string
+          description: URI reference identifying the error type
+          example: https://api.auditlocker.co/errors/validation_error
+        title:
+          type: string
+          description: Human-readable summary of the error type
+          example: Validation Error
+        status:
+          type: integer
+          description: HTTP status code
+          minimum: 400
+          maximum: 599
+          example: 400
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence
+          example: actor.id must not be an email address
+        instance:
+          type: string
+          description: URI reference identifying this specific occurrence (request ID)
+          example: urn:uuid:01912f77-1234-7890-abcd-ef0123456789
+        code:
+          type: string
+          description: Machine-readable error code for programmatic handling. Per-status narrowed schemas (ValidationError, RateLimitedError, …) constrain this to an audience-filtered enum.
+      title: ProblemDetails
+      description: RFC 9457 Problem Details error response. All error responses follow this format. Match on `code` for programmatic handling; per-status narrowed schemas allOf this base.
+    ActorInput:
+      type: object
+      required:
+        - id
+        - type
+      properties:
+        id:
+          type: string
+          maxLength: 256
+        type:
+          type: string
+          maxLength: 64
+        name:
+          type: string
+          maxLength: 256
+      additionalProperties: false
+    TargetInput:
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        type:
+          type: string
+          maxLength: 128
+        id:
+          type: string
+          maxLength: 256
+        name:
+          type: string
+          maxLength: 1024
+      additionalProperties: false
+    AuditEventInput:
+      type: object
+      required:
+        - organization_id
+        - actor
+        - action
+        - targets
+      properties:
+        organization_id:
+          type: string
+          maxLength: 256
+        actor:
+          type: object
+          required:
+            - id
+            - type
+          properties:
+            id:
+              type: string
+              maxLength: 256
+            type:
+              type: string
+              maxLength: 64
+            name:
+              type: string
+              maxLength: 256
+          additionalProperties: false
+        action:
+          type: string
+          maxLength: 256
+        targets:
+          type: array
+          items:
+            type: object
+            required:
+              - type
+              - id
+            properties:
+              type:
+                type: string
+                maxLength: 128
+              id:
+                type: string
+                maxLength: 256
+              name:
+                type: string
+                maxLength: 1024
+            additionalProperties: false
+          minItems: 1
+        source:
+          type: string
+          maxLength: 64
+        metadata:
+          type: object
+          additionalProperties: {}
+        timestamp:
+          type: string
+          format: date-time
+      additionalProperties: false
+    IngestResponse:
+      type: object
+      required:
+        - id
+        - received_at
+        - timestamp_anomaly
+        - dlp_redacted_fields
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the created event.
+        received_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the server accepted the event.
+        timestamp_anomaly:
+          anyOf:
+            - type: string
+              enum:
+                - past_window_exceeded
+            - type: string
+              enum:
+                - future_skew_exceeded
+            - type: 'null'
+          description: Non-null when the supplied timestamp fell outside the accepted window around received_at.
+        dlp_redacted_fields:
+          anyOf:
+            - type: array
+              items:
+                type: string
+            - type: 'null'
+          description: Field paths that were redacted by data-loss-prevention scanning, if any.
+      description: Event accepted and persisted.
+    TargetOutput:
+      type: object
+      required:
+        - type
+        - id
+        - name
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+      additionalProperties: false
+    AuditEventOutput:
+      type: object
+      required:
+        - id
+        - environment_id
+        - organization_id
+        - received_at
+        - timestamp
+        - timestamp_anomaly
+        - actor
+        - action
+        - targets
+        - source
+        - metadata
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the event.
+        environment_id:
+          type: string
+          description: Identifier of the environment this event belongs to.
+        organization_id:
+          type: string
+        received_at:
+          type: string
+          format: date-time
+        timestamp:
+          type: string
+          format: date-time
+        timestamp_anomaly:
+          anyOf:
+            - type: string
+              enum:
+                - past_window_exceeded
+            - type: string
+              enum:
+                - future_skew_exceeded
+            - type: 'null'
+        actor:
+          type: object
+          required:
+            - id
+            - type
+            - name
+          properties:
+            id:
+              type: string
+            type:
+              type: string
+            name:
+              anyOf:
+                - type: string
+                - type: 'null'
+          additionalProperties: false
+        action:
+          type: string
+        targets:
+          type: array
+          items:
+            type: object
+            required:
+              - type
+              - id
+              - name
+            properties:
+              type:
+                type: string
+              id:
+                type: string
+              name:
+                anyOf:
+                  - type: string
+                  - type: 'null'
+            additionalProperties: false
+          minItems: 1
+        source:
+          anyOf:
+            - type: string
+            - type: 'null'
+        metadata:
+          anyOf:
+            - type: object
+              additionalProperties: {}
+            - type: 'null'
+      additionalProperties: false
+      description: A single audit event with full forensic context.
+    QueryResponse:
+      type: object
+      required:
+        - events
+        - next_cursor
+      properties:
+        events:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - environment_id
+              - organization_id
+              - received_at
+              - timestamp
+              - timestamp_anomaly
+              - actor
+              - action
+              - targets
+              - source
+              - metadata
+            properties:
+              id:
+                type: string
+                description: Unique identifier for the event.
+              environment_id:
+                type: string
+                description: Identifier of the environment this event belongs to.
+              organization_id:
+                type: string
+              received_at:
+                type: string
+                format: date-time
+              timestamp:
+                type: string
+                format: date-time
+              timestamp_anomaly:
+                anyOf:
+                  - type: string
+                    enum:
+                      - past_window_exceeded
+                  - type: string
+                    enum:
+                      - future_skew_exceeded
+                  - type: 'null'
+              actor:
+                type: object
+                required:
+                  - id
+                  - type
+                  - name
+                properties:
+                  id:
+                    type: string
+                  type:
+                    type: string
+                  name:
+                    anyOf:
+                      - type: string
+                      - type: 'null'
+                additionalProperties: false
+              action:
+                type: string
+              targets:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - type
+                    - id
+                    - name
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: string
+                    name:
+                      anyOf:
+                        - type: string
+                        - type: 'null'
+                  additionalProperties: false
+                minItems: 1
+              source:
+                anyOf:
+                  - type: string
+                  - type: 'null'
+              metadata:
+                anyOf:
+                  - type: object
+                    additionalProperties: {}
+                  - type: 'null'
+            additionalProperties: false
+            description: A single audit event with full forensic context.
+        next_cursor:
+          anyOf:
+            - type: string
+            - type: 'null'
+      description: Paginated list of audit events matching the supplied filters.
+    BatchIngestRequest:
+      type: object
+      required:
+        - events
+      properties:
+        events:
+          type: array
+          items:
+            type: object
+            required:
+              - organization_id
+              - actor
+              - action
+              - targets
+            properties:
+              organization_id:
+                type: string
+                maxLength: 256
+              actor:
+                type: object
+                required:
+                  - id
+                  - type
+                properties:
+                  id:
+                    type: string
+                    maxLength: 256
+                  type:
+                    type: string
+                    maxLength: 64
+                  name:
+                    type: string
+                    maxLength: 256
+                additionalProperties: false
+              action:
+                type: string
+                maxLength: 256
+              targets:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - type
+                    - id
+                  properties:
+                    type:
+                      type: string
+                      maxLength: 128
+                    id:
+                      type: string
+                      maxLength: 256
+                    name:
+                      type: string
+                      maxLength: 1024
+                  additionalProperties: false
+                minItems: 1
+              source:
+                type: string
+                maxLength: 64
+              metadata:
+                type: object
+                additionalProperties: {}
+              timestamp:
+                type: string
+                format: date-time
+            additionalProperties: false
+          maxItems: 500
+          minItems: 1
+    BatchEventResultSuccess:
+      type: object
+      required:
+        - status
+        - index
+        - id
+        - received_at
+        - dlp_redacted_fields
+      properties:
+        status:
+          type: string
+          description: Discriminator literal — narrows the union to the success variant.
+          enum:
+            - accepted
+        index:
+          type: integer
+        id:
+          type: string
+          description: Unique identifier for the created event.
+        received_at:
+          type: string
+          format: date-time
+        dlp_redacted_fields:
+          anyOf:
+            - type: array
+              items:
+                type: string
+            - type: 'null'
+          description: Field paths that were redacted by data-loss-prevention scanning, if any. Per-event — present on every accepted batch item.
+    BatchEventResultError:
+      type: object
+      required:
+        - status
+        - index
+        - error
+      properties:
+        status:
+          type: string
+          description: Discriminator literal — narrows the union to the error variant.
+          enum:
+            - rejected
+        index:
+          type: integer
+        error:
+          $ref: '#/components/schemas/ProblemDetails'
+    BatchIngestResponse:
+      type: object
+      required:
+        - accepted
+        - rejected
+        - results
+      properties:
+        accepted:
+          type: integer
+          description: Number of events successfully ingested
+        rejected:
+          type: integer
+          description: Number of events that failed validation
+        results:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/BatchEventResultSuccess'
+              - $ref: '#/components/schemas/BatchEventResultError'
+            discriminator:
+              propertyName: status
+              mapping:
+                accepted: '#/components/schemas/BatchEventResultSuccess'
+                rejected: '#/components/schemas/BatchEventResultError'
+          description: Per-event results in the same order as the input array
+      description: Multi-status result for batch ingest — inspect `results[].status` to distinguish accepted from rejected events.
+    ValidationError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 400
+            code:
+              type: string
+              enum:
+                - validation_error
+                - invalid_actor_id
+                - reserved_organization_id
+                - field_too_long
+            field:
+              type: string
+    UnauthenticatedError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 401
+            code:
+              type: string
+              enum:
+                - unauthenticated
+                - api_key_revoked
+                - project_deleted
+    ScopeMismatchError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 403
+            code:
+              type: string
+              enum:
+                - scope_mismatch
+            requiredScope:
+              type: string
+              enum:
+                - ingest:write
+                - query:read
+            actualScope:
+              type: string
+              enum:
+                - ingest:write
+                - query:read
+    NotFoundError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 404
+            code:
+              type: string
+              enum:
+                - not_found
+                - environment_not_found
+    IdempotencyConflictError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 409
+            code:
+              type: string
+              enum:
+                - idempotency_conflict
+    PayloadTooLargeError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 413
+            code:
+              type: string
+              enum:
+                - payload_too_large
+    UnsupportedMediaTypeError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 415
+            code:
+              type: string
+              enum:
+                - unsupported_media_type
+    RateLimitedError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 429
+            code:
+              type: string
+              enum:
+                - rate_limited
+            retryAfter:
+              type: integer
+              description: Seconds until the next request may succeed.
+    InternalError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 500
+            code:
+              type: string
+              enum:
+                - internal_error
+    ServiceUnavailableError:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            status:
+              type: integer
+              enum:
+                - 503
+            code:
+              type: string
+              enum:
+                - service_unavailable
+paths:
+  x-speakeasy-errors:
+    statusCodes:
+      - 4XX
+      - 5XX
+  /v1/events:
+    post:
+      operationId: ingestEvent
+      summary: Ingest a single audit event
+      tags:
+        - events
+      description: Accepts a single audit event, validates, and writes synchronously. Returns 201 Created with the event ID and server-assigned timestamp.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditEventInput'
+            examples:
+              roleChange:
+                summary: User role changed
+                value:
+                  organization_id: org_acme
+                  actor:
+                    id: usr_a8f3k2
+                    type: user
+                  action: user.role.changed
+                  targets:
+                    - id: usr_b1c4d8
+                      type: user
+                      name: Bob
+                  metadata:
+                    changes:
+                      role:
+                        from: member
+                        to: admin
+      parameters:
+        - schema:
+            type: string
+          example: evt_abc123_1714000000
+          in: header
+          name: idempotency-key
+          required: false
+          description: Client-generated unique key for idempotent requests. Duplicate requests with the same key and payload within 24 hours return the cached response. Same key with different payload returns 409 Conflict.
+      security:
+        - apiKey: []
+      x-speakeasy-name-override: ingest
+      responses:
+        '201':
+          description: Event accepted and persisted.
+          headers:
+            x-request-id:
+              schema:
+                type: string
+                format: uuid
+              description: Unique request identifier for debugging and support.
+            idempotency-key:
+              schema:
+                type: string
+              description: Echoes the request Idempotency-Key when present.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestResponse'
+        '400':
+          description: Validation — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Unauthenticated — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+        '403':
+          description: Scope Mismatch — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ScopeMismatchError'
+        '409':
+          description: Idempotency Conflict — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/IdempotencyConflictError'
+        '413':
+          description: Payload Too Large — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '415':
+          description: Unsupported Media Type — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnsupportedMediaTypeError'
+        '429':
+          description: Rate Limited — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedError'
+        '500':
+          description: Internal — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+        '503':
+          description: Service Unavailable — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableError'
+    get:
+      operationId: listEvents
+      summary: Query audit events
+      tags:
+        - events
+      description: Returns a paginated list of audit events matching the specified filters. Use the `cursor` parameter to fetch subsequent pages.
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: organization_id
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: actor_id
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: action
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: target_type
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: target_id
+          required: false
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: received_at_gte
+          required: false
+        - schema:
+            type: string
+            format: date-time
+          in: query
+          name: received_at_lt
+          required: false
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+          in: query
+          name: limit
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: cursor
+          required: false
+        - schema:
+            type: boolean
+            default: true
+          in: query
+          name: enrich_actors
+          required: false
+      security:
+        - apiKey: []
+      x-speakeasy-name-override: list
+      x-speakeasy-pagination:
+        type: cursor
+        inputs:
+          - name: cursor
+            in: parameters
+            type: cursor
+        outputs:
+          nextCursor: $.next_cursor
+      responses:
+        '200':
+          description: Paginated list of audit events matching the supplied filters.
+          headers:
+            x-request-id:
+              schema:
+                type: string
+                format: uuid
+              description: Unique request identifier for debugging and support.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Validation — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Unauthenticated — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+        '403':
+          description: Scope Mismatch — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ScopeMismatchError'
+        '429':
+          description: Rate Limited — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedError'
+        '500':
+          description: Internal — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+        '503':
+          description: Service Unavailable — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableError'
+  /v1/events/batch:
+    post:
+      operationId: ingestEventBatch
+      summary: Ingest a batch of audit events
+      tags:
+        - events
+      description: Accepts up to 500 audit events, validates each, and writes valid events synchronously. Returns 207 Multi-Status with per-event results. Some events may succeed while others fail validation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchIngestRequest'
+            examples:
+              mixedBatch:
+                summary: Mixed batch — one valid, one with invalid actor id
+                value:
+                  events:
+                    - organization_id: org_acme
+                      actor:
+                        id: usr_a8f3k2
+                        type: user
+                      action: doc.shared
+                      targets:
+                        - id: doc_42
+                          type: doc
+                    - organization_id: org_acme
+                      actor:
+                        id: alice@example.com
+                        type: user
+                      action: doc.viewed
+                      targets:
+                        - id: doc_99
+                          type: doc
+      parameters:
+        - schema:
+            type: string
+          example: evt_abc123_1714000000
+          in: header
+          name: idempotency-key
+          required: false
+          description: Client-generated unique key for idempotent requests. Duplicate requests with the same key and payload within 24 hours return the cached response. Same key with different payload returns 409 Conflict.
+      security:
+        - apiKey: []
+      x-speakeasy-name-override: ingestBatch
+      responses:
+        '207':
+          description: Multi-status result for batch ingest — inspect `results[].status` to distinguish accepted from rejected events.
+          headers:
+            x-request-id:
+              schema:
+                type: string
+                format: uuid
+              description: Unique request identifier for debugging and support.
+            idempotency-key:
+              schema:
+                type: string
+              description: Echoes the request Idempotency-Key when present.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchIngestResponse'
+        '400':
+          description: Validation — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Unauthenticated — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+        '403':
+          description: Scope Mismatch — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ScopeMismatchError'
+        '409':
+          description: Idempotency Conflict — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/IdempotencyConflictError'
+        '413':
+          description: Payload Too Large — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '415':
+          description: Unsupported Media Type — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnsupportedMediaTypeError'
+        '429':
+          description: Rate Limited — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedError'
+        '500':
+          description: Internal — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+        '503':
+          description: Service Unavailable — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableError'
+  /v1/events/{id}:
+    get:
+      operationId: getEvent
+      summary: Get a single audit event
+      tags:
+        - events
+      description: Retrieves a single audit event by its ID. Returns 404 if the event does not exist or belongs to a different project.
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: path
+          name: id
+          required: true
+          description: Event identifier.
+      security:
+        - apiKey: []
+      x-speakeasy-name-override: get
+      responses:
+        '200':
+          description: A single audit event with full forensic context.
+          headers:
+            x-request-id:
+              schema:
+                type: string
+                format: uuid
+              description: Unique request identifier for debugging and support.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditEventOutput'
+        '400':
+          description: Validation — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Unauthenticated — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+        '403':
+          description: Scope Mismatch — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ScopeMismatchError'
+        '404':
+          description: Not Found — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '429':
+          description: Rate Limited — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RateLimitedError'
+        '500':
+          description: Internal — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+        '503':
+          description: Service Unavailable — see ProblemDetails.code for specifics
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableError'
+servers:
+  - url: https://api.auditlocker.co
+    description: Production
+tags:
+  - name: events
+    description: Audit event ingest and query operations
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 30000
+    maxElapsedTime: 60000
+    exponent: 1.5
+  statusCodes:
+    - 5XX
+    - '408'
+    - '429'
+  retryConnectionErrors: true

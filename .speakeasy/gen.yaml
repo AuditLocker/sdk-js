@@ -1,0 +1,138 @@
+configVersion: 2.0.0
+generation:
+  devContainers:
+    enabled: true
+    schemaPath: .speakeasy/out.openapi.yaml
+  sdkClassName: AuditLocker
+  maintainOpenAPIOrder: true
+  usageSnippets:
+    optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
+  useClassNamesForArrayFields: true
+  fixes:
+    nameResolutionDec2023: true
+    nameResolutionFeb2025: true
+    parameterOrderingFeb2024: true
+    requestResponseComponentNamesFeb2024: true
+    securityFeb2025: true
+    sharedErrorComponentsApr2025: true
+    sharedNestedComponentsJan2026: true
+    nameOverrideFeb2026: true
+  auth:
+    oAuth2ClientCredentialsEnabled: false
+    oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  inferSSEOverload: true
+  sdkHooksConfigAccess: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: body
+  versioningStrategy: automatic
+  persistentEdits: {}
+  tests:
+    generateTests: false
+    generateNewTests: true
+    skipResponseBodyAssertions: false
+typescript:
+  version: 0.0.0
+  acceptHeaderEnum: false
+  additionalDependencies:
+    dependencies: {}
+    devDependencies:
+      '@arethetypeswrong/cli': ^0.18
+      oxfmt: ^0.48.0
+      publint: ^0.3
+      vitest: ^4.1.5
+    peerDependencies: {}
+  additionalPackageJSON:
+    bugs:
+      url: https://github.com/auditlocker/sdk-js/issues
+    description: Official JavaScript / TypeScript client for the AuditLocker managed audit-logging service
+    engines:
+      node: '>=22'
+      pnpm: '>=10'
+    files:
+      - dist
+    homepage: https://auditlocker.co
+    keywords:
+      - audit
+      - logging
+      - compliance
+      - soc2
+      - sdk
+      - auditlocker
+    license: Apache-2.0
+    pnpm:
+      overrides:
+        postcss: '>=8.5.10'
+        vite: ^8
+    publishConfig:
+      access: public
+      provenance: true
+    repository:
+      type: git
+      url: git+https://github.com/auditlocker/sdk-js.git
+  additionalScripts:
+    attw: attw --pack . --profile node16
+    audit:ci: pnpm dlx audit-ci@7.1.0 --config ./audit-ci.jsonc
+    format: oxfmt --check
+    format:fix: oxfmt
+    publint: publint
+    regen: speakeasy run --skip-versioning && node scripts/repoint-entry.mjs && pnpm install && pnpm build
+    test: vitest run
+    typecheck: tsgo --noEmit
+  alwaysIncludeInboundAndOutbound: false
+  author: AuditLocker <support@auditlocker.co>
+  baseErrorName: AuditLockerError
+  clientServerStatusCodesAsErrors: true
+  compileCommand:
+    - pnpm
+    - run
+    - build
+  constFieldsAlwaysOptional: false
+  defaultErrorName: AuditLockerDefaultError
+  enableCustomCodeRegions: false
+  enableMCPServer: false
+  enableReactQuery: false
+  enumFormat: union
+  envVarPrefix: AUDITLOCKER
+  exportZodModelNamespace: false
+  fixEnumNameSanitization: false
+  flatAdditionalProperties: true
+  flattenGlobalSecurity: true
+  flatteningOrder: parameters-first
+  formStringArrayEncodeMode: array
+  forwardCompatibleEnumsByDefault: true
+  forwardCompatibleUnionsByDefault: tagged-only
+  generateExamples: true
+  imports:
+    option: openapi
+    paths:
+      callbacks: models/callbacks
+      errors: models/errors
+      operations: models/operations
+      shared: models
+      webhooks: models/webhooks
+  inferUnionDiscriminators: true
+  inputModelSuffix: input
+  jsonpath: rfc9535
+  laxMode: lax
+  legacyFileNaming: false
+  maxMethodParams: 0
+  methodArguments: infer-optional-args
+  modelPropertyCasing: camel
+  moduleFormat: dual
+  multipartArrayFormat: standard
+  outputModelSuffix: output
+  packageName: '@auditlocker/sdk'
+  preApplyUnionDiscriminators: true
+  preserveModelFieldNames: false
+  responseFormat: flat
+  sseFlatResponse: false
+  templateVersion: v2
+  unionStrategy: populated-fields
+  usageSDKInitImports: []
+  useIndexModules: true
+  useOxlint: true
+  useTsgo: true
+  zodVersion: v4-mini

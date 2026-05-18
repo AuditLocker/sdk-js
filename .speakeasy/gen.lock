@@ -1,0 +1,879 @@
+lockVersion: 2.0.0
+id: f2e9a409-924f-434a-8669-0106c61159e3
+management:
+  docChecksum: 309d42f0b761cf92239427a6f1d11cf7
+  docVersion: 1.0.0
+  speakeasyVersion: 1.763.1
+  generationVersion: 2.884.4
+  releaseVersion: 0.0.0
+  configChecksum: df9e30fc6e7ab2551a0f0cef89a8305c
+persistentEdits:
+  generation_id: 1a8d7d58-a7f6-4a26-b1cf-6e7a2b46135b
+  pristine_commit_hash: 03b10293873dd277cf6c24ae521c9bf0c0909bd7
+  pristine_tree_hash: 255a368d86dc5bb604b3fe675a91d80ac5010ecc
+features:
+  typescript:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.14
+    core: 3.26.50
+    defaultEnabledRetries: 0.1.0
+    devContainers: 2.90.1
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.2
+    errors: 2.86.3
+    globalSecurity: 2.82.16
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.1
+    globalServerURLs: 2.83.1
+    methodArguments: 0.1.2
+    nameOverrides: 2.81.4
+    nullables: 0.1.1
+    pagination: 2.83.2
+    responseFormat: 0.3.0
+    retries: 2.83.0
+    sdkHooks: 0.4.0
+    unions: 2.86.4
+trackedFiles:
+  .devcontainer/README.md:
+    id: b170c0f184ac
+    last_write_checksum: sha1:b6564d2a7c8ae764fff6d1b4666dcd787210a000
+    pristine_git_object: cdef18c30e383534a868742e1b9148f2670606f9
+  .devcontainer/devcontainer.json:
+    id: b34062a34eb1
+    last_write_checksum: sha1:d0b15193202c961e7d1875864ddb15f9d17c84dd
+    pristine_git_object: 4d560dd5f40afaf10d96eb75b1f02cd48bbd640c
+  .devcontainer/setup.sh:
+    id: 5f1dfbfeb8eb
+    last_write_checksum: sha1:6385fca83ddfee7c1096e5a96717b728c48ac392
+    pristine_git_object: 152453a3599117a514075dec3f5f619af551b4e0
+  .gitattributes:
+    id: 24139dae6567
+    last_write_checksum: sha1:26d16d8297b104945139da8c25bd38feeaad3e25
+    pristine_git_object: 113eead5093c17d43a46159132885318f281a68a
+  .npmignore:
+    id: aa70c1f807c3
+    last_write_checksum: sha1:6572da81f2e7a978ec29c22c2210bf461c5897b2
+    pristine_git_object: 670ac0a62d7e568c9d44a14f5deafb8442a255d8
+  .oxlintrc.json:
+    id: 8b9b571b1983
+    last_write_checksum: sha1:f14bd09c455fa2de0d94641369b7888d23ee62f2
+    pristine_git_object: 6ee2921010070a544e252596defc55d501e1c1ae
+  FUNCTIONS.md:
+    id: 21b9df02aaeb
+    last_write_checksum: sha1:0576ab13849bfe92395781fec56cde8ddecf5bff
+    pristine_git_object: 211dae12a0333a9040c22dfc4ff9637c4d021a37
+  RUNTIMES.md:
+    id: 620c490847b6
+    last_write_checksum: sha1:e45b854f02c357cbcfdb8c3663000e8339e16505
+    pristine_git_object: 27731c3b5ace66bedc454ed5acbe15075aacd3dc
+  USAGE.md:
+    id: 3aed33ce6e6f
+    last_write_checksum: sha1:0ce2ecb21c570ae951ff890d04582f2e87029e5a
+    pristine_git_object: f1c0533f10503a6d3fb1f04819a1ea96f669c28e
+  docs/lib/utils/retryconfig.md:
+    id: 0ce9707cb848
+    last_write_checksum: sha1:bc4454e196fcd219f5a78da690375a884f5ed07b
+    pristine_git_object: 08f95f4552349360b2c0b01802aa71ec3a55d2c2
+  docs/models/actual-scope.md:
+    id: 7a074815fc39
+    last_write_checksum: sha1:31c921c80fb49b3739c4088b5ed058bb2ae41f00
+    pristine_git_object: b87b64c6a8e8c193fcc4409c0057db640ffc08b9
+  docs/models/audit-event-input-actor.md:
+    id: f098261ac417
+    last_write_checksum: sha1:521f2051a2b6d16119a0ea558ee71c12a118933c
+    pristine_git_object: 19d674b59e427a5eb73a9fc8d4beeb034b0a53e6
+  docs/models/audit-event-input-target.md:
+    id: ec7d7ab3218b
+    last_write_checksum: sha1:6d87985b96fe541a49a1d3ee53f2ee7eae2a8a0c
+    pristine_git_object: 62fed89a40c4068c670c277c5461bd87255c3acd
+  docs/models/audit-event-input.md:
+    id: 3b20e1f3e691
+    last_write_checksum: sha1:9e63458b8980599bc1e8f143ee85aba7bc038b94
+    pristine_git_object: 1a0dd1a113bdb78438f93a8eb0dd7ba3941ed4d5
+  docs/models/audit-event-output-actor.md:
+    id: 5a8c322990ee
+    last_write_checksum: sha1:7fd86e2f4bdbb5b9c88567d3dc0064de4f066f2a
+    pristine_git_object: 4f9782f732173623e2f4dbaf0be0a597b33e3600
+  docs/models/audit-event-output-target.md:
+    id: 39ae3fbb4f30
+    last_write_checksum: sha1:d7a61d7adb2fc9b161ace63fb04d353001351e13
+    pristine_git_object: c3f31947b25819125073b58c906fe0be04c65288
+  docs/models/audit-event-output-timestamp-anomaly-future-skew-exceeded.md:
+    id: 7c8b5afec45e
+    last_write_checksum: sha1:5c836313fc234e576087519ea60a5744a3ef05c0
+    pristine_git_object: 3abaaf9a8a697b1b7e2e7430c1145c0863976c85
+  docs/models/audit-event-output-timestamp-anomaly-past-window-exceeded.md:
+    id: b3c2e8d2e270
+    last_write_checksum: sha1:896511814561a14349c7df780936c208574b0524
+    pristine_git_object: c3b0ec324bda98743b3ede4b5e4ba19f69511722
+  docs/models/audit-event-output-timestamp-anomaly-union.md:
+    id: 67ed7dce0610
+    last_write_checksum: sha1:68fad3a9a781a472c2d67f063afcacd868bfb0dd
+    pristine_git_object: 57327beb251d4b7bfc5adcd7b90755b54813472a
+  docs/models/audit-event-output.md:
+    id: a91852de9c28
+    last_write_checksum: sha1:1902044a0d3e737253b695bc8eb8320425b45dfe
+    pristine_git_object: 63ca5e51c9437e92542a8aac2fd550878fdc0823
+  docs/models/batch-event-result-error.md:
+    id: d21e720c7792
+    last_write_checksum: sha1:40bfa1ac8b8f8eb620d9c19242a4eafe34d5b130
+    pristine_git_object: 4351885670626555e369f0bec1f2e05e96992eb3
+  docs/models/batch-event-result-success.md:
+    id: c108951215b2
+    last_write_checksum: sha1:b2d8a9c2dcf015875ff64fe6c17692ac6c2160b2
+    pristine_git_object: 79b72fda1ed7e086620e7add9515474cf391eda9
+  docs/models/batch-ingest-request-actor.md:
+    id: 6338f9f5a4f5
+    last_write_checksum: sha1:8e37cc63deb09151646497c79ad126241d36debf
+    pristine_git_object: 964c95eff33f726f9c127aedcd8d984290931f0f
+  docs/models/batch-ingest-request-event.md:
+    id: 76de521892c0
+    last_write_checksum: sha1:a1a73d2cc4002dcb59038e892140f454c01af0dd
+    pristine_git_object: 9b8091bd29ff8dd3b0b9957c9ae2801f7fc5f0fc
+  docs/models/batch-ingest-request-target.md:
+    id: f26efb2d5399
+    last_write_checksum: sha1:c8800c7032bbacca174bd1bfe7924ab9a7245cdb
+    pristine_git_object: ee076f9daf4a5419ab5a571920c673bff7c9cd71
+  docs/models/batch-ingest-request.md:
+    id: 2be47bec8dd8
+    last_write_checksum: sha1:4d216f960ff0b39e35d50824a3333b4fd614a6e7
+    pristine_git_object: 3ebc275a3f73fec2a5db0d8426a25df4241ad8a7
+  docs/models/batch-ingest-response.md:
+    id: 8448608651c2
+    last_write_checksum: sha1:c717735f29e555618c9fd762bddbcad44d8992ba
+    pristine_git_object: 0a5835358ffaae0e435ede3687b0a147196506ea
+  docs/models/errors/idempotency-conflict-error.md:
+    id: 48969fe1edf7
+    last_write_checksum: sha1:b6aa06100d8bc97e28d39a64b79eecacd6ea81d7
+    pristine_git_object: e1bdc3e4894974fee530a6fa3f2b75b6fc0ad909
+  docs/models/errors/internal-error.md:
+    id: 481e7770ea8e
+    last_write_checksum: sha1:2be454a4164977313a5afdd5c1b534d5fcb31c19
+    pristine_git_object: 4c549f52ff5f58346a1a1179b69c632bdcefa55c
+  docs/models/errors/not-found-error.md:
+    id: 972fccfef7dc
+    last_write_checksum: sha1:bce4ce283532bfd7dcd48e107addda05ad9c94e1
+    pristine_git_object: 3bd98a4849294c4c6c5caf45f250e33193e0ad95
+  docs/models/errors/payload-too-large-error.md:
+    id: fdb66c4c18a5
+    last_write_checksum: sha1:00eecb4967b63b4738fc352b14f1bd1d864d0da5
+    pristine_git_object: f8626ddec2c0186592c7f0cfb0320a8bc6b641e8
+  docs/models/errors/rate-limited-error.md:
+    id: e1fdb5f411c3
+    last_write_checksum: sha1:cc1d7169bf182d5c8d83ad3637f0d0b57a14260d
+    pristine_git_object: 69df96cbe1ef987d9c60aef74432bf024efa1231
+  docs/models/errors/scope-mismatch-error.md:
+    id: b6014082de30
+    last_write_checksum: sha1:3c1a0fec56a9e83a52cad5d4662e2ca60e4c98ec
+    pristine_git_object: 0b3981873974f4485d280e627779441c0d14b5f3
+  docs/models/errors/service-unavailable-error.md:
+    id: 700b97d1b5c0
+    last_write_checksum: sha1:3103349ab8b07052f879e35274014b7cff22ed32
+    pristine_git_object: e3b5e0c6bb1800867527e3d81ac97d1f6c2207e7
+  docs/models/errors/unauthenticated-error.md:
+    id: 7d2f7bcb3fc9
+    last_write_checksum: sha1:2ece150d5378b9c687db73f9eaa0347ee34f1c72
+    pristine_git_object: a49cecbbd4255fa67cd0e5f7e0892f61fad350a9
+  docs/models/errors/unsupported-media-type-error.md:
+    id: 8247bdca9e0a
+    last_write_checksum: sha1:83596114c829980152df41efeeb8a97f2e5e53d5
+    pristine_git_object: 525599a02ecfb50d486198e8ac9b2b25310a468e
+  docs/models/errors/validation-error.md:
+    id: b9d235ae2dc9
+    last_write_checksum: sha1:f51538afa7164661660f9e6d3f339c85f92cd1bc
+    pristine_git_object: 58b99d0d56cd216a009b353e5046802628834e76
+  docs/models/idempotency-conflict-error-code.md:
+    id: 4efb9eaab3f8
+    last_write_checksum: sha1:e18d0c9f678db21e801ffc790cd681603b1a3b2d
+    pristine_git_object: cde4f4ccd1380acbc7a8d0f680fa847dca7c53f0
+  docs/models/idempotency-conflict-error-status.md:
+    id: 777cb01d2a39
+    last_write_checksum: sha1:52bb1c46613ce5e73f41f67704526dfcfe11ef4f
+    pristine_git_object: 2de4adf57a1a595809c5e051d3f4f76821a5ebd6
+  docs/models/ingest-response-timestamp-anomaly-future-skew-exceeded.md:
+    id: eb846198001f
+    last_write_checksum: sha1:f8ccc6576089911128ded6dcd0c999f376a08426
+    pristine_git_object: 59fb7d81fda0e102e083084fdd24217a9ab1bd20
+  docs/models/ingest-response-timestamp-anomaly-past-window-exceeded.md:
+    id: f1367835884f
+    last_write_checksum: sha1:b93486d405dcfe902d8292393f2707f07d7912f0
+    pristine_git_object: 496e5d57f8421ea2621d37c92c4e3daf736e86e8
+  docs/models/ingest-response-timestamp-anomaly-union.md:
+    id: de6f6aade514
+    last_write_checksum: sha1:a80a8448b171593ebe49fff1a7046a9eb3057a58
+    pristine_git_object: bfda8b188452b5406fb3ae8deaba078a7d6d46c7
+  docs/models/ingest-response.md:
+    id: b8b9082791d1
+    last_write_checksum: sha1:e9a997a9f985093479862ff13b4838f2338ad8a9
+    pristine_git_object: ed451c229cfe6344eef008bf5fa14166a544c575
+  docs/models/internal-error-code.md:
+    id: aa6dc252c235
+    last_write_checksum: sha1:65d44a5b60ec55991d45cca02fd5c080d0d8c554
+    pristine_git_object: 60537c6df648d829cb7af3eb55b503d3f4bda5e6
+  docs/models/internal-error-status.md:
+    id: 9db802e459af
+    last_write_checksum: sha1:a86410d9eaf4293b703689fda00768b0cdc4ffce
+    pristine_git_object: 6e50945bfce0da0d4202241b4217a1b7aee64e98
+  docs/models/not-found-error-code.md:
+    id: 7ac4abf2c5c8
+    last_write_checksum: sha1:97037d9b2165fd38111a4a9b8eb2c0624483a5b1
+    pristine_git_object: 3d6e33ea952792e725bd1cf332a9adf46078c6a2
+  docs/models/not-found-error-status.md:
+    id: 91e59e16e555
+    last_write_checksum: sha1:6a9c7959d726a4f08b451f3d8806a8361e1d9d2a
+    pristine_git_object: 0f065fee491377358cfa0019a46c5a2a4cba126f
+  docs/models/operations/get-event-request.md:
+    id: 58b1d373a9d2
+    last_write_checksum: sha1:6a6409b5b1e1d64063552838069bf434a32e25c7
+    pristine_git_object: d960bcc9891c6c90efdd298936ea1e883a76ea9a
+  docs/models/operations/get-event-response.md:
+    id: 3fa31217af5d
+    last_write_checksum: sha1:af824fa024f3231a270e84b083080ac0de6a8619
+    pristine_git_object: f86ead3f73c173a54afd96cc3e5b3a7d9827a39b
+  docs/models/operations/ingest-event-batch-request.md:
+    id: 91e77d40c624
+    last_write_checksum: sha1:faa7984c67e1c08229d76f0e4a2c4b0f00b59b13
+    pristine_git_object: 8489d74e3fb13d372e517580e8ce4788b694725d
+  docs/models/operations/ingest-event-batch-response.md:
+    id: a1a674a76548
+    last_write_checksum: sha1:36fdf61010446eadd5e7686ed58c09bd6698a93d
+    pristine_git_object: ae05acb7b31bc396a6691968b9309f43c35428df
+  docs/models/operations/ingest-event-request.md:
+    id: f15a042fc40f
+    last_write_checksum: sha1:ffb5dac30af8188763413bca3d20d9c6aca763b9
+    pristine_git_object: 7d3c6c84f84fdbf1d2eb2780b4b682cd263854df
+  docs/models/operations/ingest-event-response.md:
+    id: 77fb57cf1dbf
+    last_write_checksum: sha1:87e4b7937ac1e6df6b21c894bc46e7b5e903165d
+    pristine_git_object: 17351adc47cb1661b925c03b0f3d232d1c10fb3b
+  docs/models/operations/list-events-request.md:
+    id: f20ebcfa7c0f
+    last_write_checksum: sha1:497f7505d06e7ecf6cbcd2a78deee7e0cd309ba0
+    pristine_git_object: fa6ffbcc8c802e0ab9c8856eafbdc5fa556341dc
+  docs/models/operations/list-events-response.md:
+    id: 1c5652da6850
+    last_write_checksum: sha1:5cdc9a0aa2a9f1c0041ac41a587ff4fc1deee971
+    pristine_git_object: 6f4de292bdddb5627741177b815dbca86850b659
+  docs/models/payload-too-large-error-code.md:
+    id: b11b6bc07acb
+    last_write_checksum: sha1:bb179af297aa84455ffbefe71f060de65d1c0aea
+    pristine_git_object: a1d2cb48258cce8b4fcebf1fa3368c80ba8b9542
+  docs/models/payload-too-large-error-status.md:
+    id: a2b8409edbc2
+    last_write_checksum: sha1:75b8e2526828afafcdf2807e3ca464bbfb7e55d4
+    pristine_git_object: 7b2d5802423fd0d18cad6bc2462355dc4b684921
+  docs/models/problem-details.md:
+    id: 38f4f32c642b
+    last_write_checksum: sha1:47c6f05ed098c598faa8e21d5759c61098085267
+    pristine_git_object: e31502e9ccbe837fb75fd3d8701aba72de77af07
+  docs/models/query-response-actor.md:
+    id: 376813d963ba
+    last_write_checksum: sha1:d6cfae0ce9d0a2f835de30ed9f75ebbe3f83e297
+    pristine_git_object: ce1087a0a11cd8e8842636416e2bd94b13f571cb
+  docs/models/query-response-event.md:
+    id: 1b8a0df470d2
+    last_write_checksum: sha1:da2705b9d5e14bdb5713b58b83b8a7561e0b6aa3
+    pristine_git_object: 93122dc9e8149a6d1ecc714e6dca7c4cd11f16cb
+  docs/models/query-response-target.md:
+    id: 2505d327ac55
+    last_write_checksum: sha1:6db87ce777973ff66aed11fd256375b6b3d3eef3
+    pristine_git_object: 066e66fc80ee1089896b9078eb2bb346b39e0450
+  docs/models/query-response-timestamp-anomaly-future-skew-exceeded.md:
+    id: 1e27af4c67db
+    last_write_checksum: sha1:a6167960b27f5a6d1ec5628e1b5e2a85bcce2278
+    pristine_git_object: a7caf39c9c4e8e06c8869e74461ffa3f25a42fe6
+  docs/models/query-response-timestamp-anomaly-past-window-exceeded.md:
+    id: 163829ca1397
+    last_write_checksum: sha1:67a1da73b598635cfe5dfac748a5f6abe900c0d8
+    pristine_git_object: 5bef4fa62d9f6d677c2333d75e1fb4fcc5df4fda
+  docs/models/query-response-timestamp-anomaly-union.md:
+    id: 95289ff2976b
+    last_write_checksum: sha1:3fa2b30553e484044fc2a25745dce21ec29453b7
+    pristine_git_object: 1e9f20dbad2cd5e561f306c50b64bb6aef13065c
+  docs/models/query-response.md:
+    id: 69d20b2accfc
+    last_write_checksum: sha1:52caa6eafc78f3b25319cdbb35bcb4ba40194d60
+    pristine_git_object: 4e4248604068da15bbd257bf75ecca2bbb0f7c18
+  docs/models/rate-limited-error-code.md:
+    id: 4fcf8659467a
+    last_write_checksum: sha1:3639b7b1036315c33c2e9af43d4fb82f6c6df9e1
+    pristine_git_object: f1de9765d2f226d2cfee69083e2e9a74275ef38b
+  docs/models/rate-limited-error-status.md:
+    id: cf584c724b8f
+    last_write_checksum: sha1:5d633dbf6ab84ec6b2d07327ad247c1e06d466b4
+    pristine_git_object: 122f029ba4c0e682c638e968fd9ff54ec93ce7d2
+  docs/models/required-scope.md:
+    id: 53fcb37c9654
+    last_write_checksum: sha1:6f24875dd0c8f25107ef077479a8b30e90359043
+    pristine_git_object: 0ed9c7eb8642cc5d5f790cb50fadea30e5ab6d82
+  docs/models/result.md:
+    id: b850437752c3
+    last_write_checksum: sha1:5951691de5898daf1ce46930a8afc70a4c81ea9b
+    pristine_git_object: 969548d1d25732380c4c3fe33876887c8d32b116
+  docs/models/scope-mismatch-error-code.md:
+    id: 2e6ac7185577
+    last_write_checksum: sha1:c83b684e90247cf99786481349ad00c7cd2dd8df
+    pristine_git_object: bd6ef7feb34f46e6b89425c48ec821cab01e89a1
+  docs/models/scope-mismatch-error-status.md:
+    id: 6df9a29853a2
+    last_write_checksum: sha1:ea24a195ec273e904812337b5ebe4712347a72f3
+    pristine_git_object: 147d1406fb57ff89346eea03b44b7b8996f6fb88
+  docs/models/security.md:
+    id: 452e4d4eb67a
+    last_write_checksum: sha1:408806222a214042e9e4a52ca7f4bac419f9652d
+    pristine_git_object: a92b3d622f6511a8fcaa1ec96ce6fa80c1e23539
+  docs/models/service-unavailable-error-code.md:
+    id: 6f5eb725721f
+    last_write_checksum: sha1:6390714961bd2a2effae8f6070c645cf409101dd
+    pristine_git_object: 784f697294d39471bbde082676da43893ac3819b
+  docs/models/service-unavailable-error-status.md:
+    id: 17a854be5392
+    last_write_checksum: sha1:3e2452db8b7afa2e8e693088bd0a131e3559675f
+    pristine_git_object: a6ece6300b4697254cc9e4e5467d97e6788b5ed5
+  docs/models/unauthenticated-error-code.md:
+    id: 15dc212a877d
+    last_write_checksum: sha1:8e8b8955c6697405b8ee3460c810582551224335
+    pristine_git_object: ac21ebdf9449b1dbfa51dfb2ebae9e81132fc2f9
+  docs/models/unauthenticated-error-status.md:
+    id: 04fba774921f
+    last_write_checksum: sha1:fa3d14de1bd7ef5e5fc39e0bb7e104c357db703b
+    pristine_git_object: 043b4533e13cbb3695b15fbda4c90b4ad3b26c12
+  docs/models/unsupported-media-type-error-code.md:
+    id: 1af6c6c0aab5
+    last_write_checksum: sha1:801c5a4408591eec031b10f135ab5bdb7121f11c
+    pristine_git_object: b026d5360f6f006e319a3848b1fd3513b90912b0
+  docs/models/unsupported-media-type-error-status.md:
+    id: 107e87d16ddd
+    last_write_checksum: sha1:f45b99471c4f1ce19d7e28d86583b6c514ae6609
+    pristine_git_object: ec4245ed2dadb3ac938521466a22f4d18982d3e3
+  docs/models/validation-error-code.md:
+    id: 9ad52ae99a1b
+    last_write_checksum: sha1:d36847f0e4d07b0a00d5df04bd5652e02300c2ac
+    pristine_git_object: d6e03067728c6e30d537d68c734c85ef4008088e
+  docs/models/validation-error-status.md:
+    id: 5c541e31a2fb
+    last_write_checksum: sha1:59ef772f5c1da973e038fa2007180febe6ca5215
+    pristine_git_object: 2aba53969ac5e7041704b70f3e9734548ac8497e
+  docs/sdks/events/README.md:
+    id: cf45a4390b9b
+    last_write_checksum: sha1:25ec3e9b33d8ff273c4ef41c1c446833aa603cb7
+    pristine_git_object: 2d6c5ca544910fcc2659404c84a3b6ed6c1b252d
+  examples/.env.template:
+    id: 52cbe5afed92
+    last_write_checksum: sha1:b9b6b65c9d1c912cc2f5f441919f7eb0eeea4e07
+    pristine_git_object: b0f81682b22d8083e045284ba57bbec3d696436e
+  examples/README.md:
+    id: 9d0f69d6e677
+    last_write_checksum: sha1:3886170e3a9cec32b6e6bf30304e556472cb403d
+    pristine_git_object: 6816f0aee57f90a8c17de16c29fb272b1161fc1a
+  examples/eventsIngest.example.ts:
+    id: ea7710e4f428
+    last_write_checksum: sha1:66cbbf7c19a3a155f6ec57313c33ee9e71007cff
+    pristine_git_object: 1af2e9a6cd63af9a6c09a95108614279897852a4
+  examples/package.json:
+    id: c1d7b0ec8e7e
+    last_write_checksum: sha1:310794074befde8072308cc282fe840bde2c53bb
+    pristine_git_object: 329afc8d30c85fdfaa64868d8b1e3e2f70ee5336
+  jsr.json:
+    id: 7f6ab7767282
+    last_write_checksum: sha1:2082453d179da25c737df0101b9794fb0c9b7c18
+    pristine_git_object: ab3977b6f49a826d9c7cbe09a7de43b16ed870ff
+  package.json:
+    id: 7030d0b2f71b
+    last_write_checksum: sha1:15544c390ea58e7d2170e772bd9b17e5929f6567
+    pristine_git_object: 4f5899cbca4ddc59bbd9fa1f302df76247b15596
+  src/core.ts:
+    id: f431fdbcd144
+    last_write_checksum: sha1:020e68b91fefda500cc2beab9b921c20582e37df
+    pristine_git_object: 71b63d24147134c696ad25a21ce4d7b0093cbb3a
+  src/funcs/events-get.ts:
+    id: 77ba3c53b3e0
+    last_write_checksum: sha1:121ac5112d2682d532553a8618d8b0d09252029b
+    pristine_git_object: 701430d30f34f785313cb2f71d74c32c4f0fbdbc
+  src/funcs/events-ingest-batch.ts:
+    id: f15852d2a1cd
+    last_write_checksum: sha1:71135ba6fc16e758755f761a6efe530dda8c5e6e
+    pristine_git_object: 385b77b2f7c623717ae82962b245dcda92df8e5b
+  src/funcs/events-ingest.ts:
+    id: 018bed86cda0
+    last_write_checksum: sha1:2443a6493fe67174d23219187c0bec3c50fa6288
+    pristine_git_object: 17a35b2fa5bdeab8e0af2518295d9832e751ab52
+  src/funcs/events-list.ts:
+    id: d1d1ecc122e0
+    last_write_checksum: sha1:44312fa404cac085ec1eb37f171c2c11fb69fb9c
+    pristine_git_object: 0159839202046e60f110e1977c7ceae7c3b58928
+  src/hooks/hooks.ts:
+    id: a2463fc6f69b
+    last_write_checksum: sha1:3a90d88b4c6c07247db8e5f6441a79538232394e
+    pristine_git_object: 94ad0a323123b34dc638717c5d67a3c23c54d5c6
+  src/hooks/index.ts:
+    id: 5f2dab62b520
+    last_write_checksum: sha1:1a11c073a6cd792932218e1d4ed36b8567bad8ef
+    pristine_git_object: f60ec7acd76141a71d78008c5a362eb0236d8335
+  src/hooks/types.ts:
+    id: 2a02d86ec24f
+    last_write_checksum: sha1:27a3444c4839bec58ae89820fd8c2483edafc3f4
+    pristine_git_object: 9c36bf01332084f735909a71036c3544cc4c7e3a
+  src/index.ts:
+    id: c5fb850250c7
+    last_write_checksum: sha1:35c9cde3ae14b18b3f893a1afe8b6c44f8760f24
+    pristine_git_object: dbcba164a0082e3bb8c43cf21fa7f8ffb9d35dfc
+  src/lib/base64.ts:
+    id: "598522066688"
+    last_write_checksum: sha1:8c94164f2f78e6041c853186fa01f659591f5913
+    pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
+  src/lib/config.ts:
+    id: 320761608fb3
+    last_write_checksum: sha1:0740d6b65ab7ea1aa799c019061e49389b9e2ca1
+    pristine_git_object: 355402e6aa0950a25c2840e2c2887eeacfaf6067
+  src/lib/dlv.ts:
+    id: b1988214835a
+    last_write_checksum: sha1:1dd3e3fbb4550c4bf31f5ef997faff355d6f3250
+    pristine_git_object: e81091f5e536f82739f71379b1fddc2d147c49e2
+  src/lib/encodings.ts:
+    id: 3bd8ead98afd
+    last_write_checksum: sha1:3e6784ec96431e0d8f98f67b3eae38d7b368264c
+    pristine_git_object: caeae5469fc8bd37da5aa7fd46d928eec5dc4b3a
+  src/lib/env.ts:
+    id: c52972a3b198
+    last_write_checksum: sha1:7f7c9e35673999907759c42c05ae4040354bce33
+    pristine_git_object: ce94488949114b183d151f03b0419063e59aa6d4
+  src/lib/files.ts:
+    id: e5efa54fcb95
+    last_write_checksum: sha1:795c14026405d547bfc47012f7ad9666e530fa7f
+    pristine_git_object: 6ca6b37d35a12448da176ee2517cc036db12c81c
+  src/lib/http.ts:
+    id: 63a80782d37e
+    last_write_checksum: sha1:797cbf16d3c7c4d62d3ba0eedb08617524938457
+    pristine_git_object: 13cf1fd7894a89f727b8d2db2ad24313a94f68c7
+  src/lib/is-plain-object.ts:
+    id: b9862591096a
+    last_write_checksum: sha1:df687f25a9590b6fd95d39df41a652ae3fd4e517
+    pristine_git_object: 61070d3d7c7e5e95b1ed7e7ea21869eb0767db77
+  src/lib/logger.ts:
+    id: 7ee7741a02bf
+    last_write_checksum: sha1:0ec9d3a2a34c362746b767e4f9a746c055d57a7b
+    pristine_git_object: d181f2937d4128afbe9b0327e0f81d1fa9c877b7
+  src/lib/matchers.ts:
+    id: d54b2253b719
+    last_write_checksum: sha1:b52ca6b5445dc3238d22662158bda4e5bd25409a
+    pristine_git_object: aabc9334a8b840503e2bd8474f8a35df40391451
+  src/lib/primitives.ts:
+    id: 74859f750b28
+    last_write_checksum: sha1:987869fc54790b9c22e9182099103d6aa7c67016
+    pristine_git_object: d21f1dc49affa4e6d324bdd60811b470fdfa7eb6
+  src/lib/retries.ts:
+    id: b24a69d15639
+    last_write_checksum: sha1:f3da74dffcbe2756c69393f8600205aa1dc06e68
+    pristine_git_object: e3ce9aba72150fc3c18f3105d39b21aba809377b
+  src/lib/schemas.ts:
+    id: deb4b531fae1
+    last_write_checksum: sha1:b4b5fd22340ebd5b2914ee7b177c797b28fba7ef
+    pristine_git_object: cf280491bf54dbd4d78e5c071c3b85cf5ca9e35e
+  src/lib/sdks.ts:
+    id: 8a6d91f1218d
+    last_write_checksum: sha1:304b844b169a7e0659a7f144d9b3662af42efd5f
+    pristine_git_object: 2d7e7fa0961bbf30d60c366127b3407df0ce7518
+  src/lib/security.ts:
+    id: 0502afa7922e
+    last_write_checksum: sha1:2a15f0adfb40c217cc9d6760e463b053ac5f4374
+    pristine_git_object: 00553b39158cf44ccd218aafa2341d03c69ff9a7
+  src/lib/url.ts:
+    id: b0057e24ed76
+    last_write_checksum: sha1:3bceadd74bf0b31adf13eb06b7531077c3e07d65
+    pristine_git_object: 79e7ce660b3732053e3adcbb5a4cdeb51496e8aa
+  src/models/audit-event-input.ts:
+    id: 92572419f04e
+    last_write_checksum: sha1:0f97c888a4a9b9650ecda76deb909e1e6be5dc3f
+    pristine_git_object: ac9f3181840803833faa27cf29aeddf63b804690
+  src/models/audit-event-output.ts:
+    id: 58489f9e5317
+    last_write_checksum: sha1:12634b0e8841debc3c9e311e21c010d013ed2d01
+    pristine_git_object: 3782a4aa2df7c2edbbff6e65f04ee5fcacc49278
+  src/models/batch-event-result-error.ts:
+    id: 1453794c64d3
+    last_write_checksum: sha1:b60cc2067146ca657500a65a6a40c4cbdc0b2782
+    pristine_git_object: e263371476932c35356a7b2e3f6eb519eb2a7858
+  src/models/batch-event-result-success.ts:
+    id: dbf69b71df04
+    last_write_checksum: sha1:547c0bf1553089745f2c1bce12f33f6bee6e572a
+    pristine_git_object: 84cbd64396d4e432333049b2e742b5caaad80607
+  src/models/batch-ingest-request.ts:
+    id: 0c44d7dc18ea
+    last_write_checksum: sha1:35c6e0ab811a621ec99a69addf0fba9bb6391912
+    pristine_git_object: 835a74e6498a45fead469e45301de5d087eac41a
+  src/models/batch-ingest-response.ts:
+    id: 4aa80c487029
+    last_write_checksum: sha1:d8837ec40c0060ea86155267460ae7366c48fd1a
+    pristine_git_object: 3567d05e2b76fde146c969481d53d711ee7c9962
+  src/models/errors/audit-locker-default-error.ts:
+    id: fccb1b88a347
+    last_write_checksum: sha1:e5e157710731a0dc95cce03aa73acf1fe8f0c3f3
+    pristine_git_object: 22854eb172f346f1f9897c37bb5a50bb2d853d19
+  src/models/errors/audit-locker-error.ts:
+    id: bb4618dbb9e5
+    last_write_checksum: sha1:bff8c8c6d46b8b80884af2a9f0a85d53f3275558
+    pristine_git_object: cdba57ab1b4f22fa584ec9f1ea82f8b70d3e3af5
+  src/models/errors/http-client-errors.ts:
+    id: 08390231aab8
+    last_write_checksum: sha1:994ced121c54fecd0af038ccfb7855fbfd3868ec
+    pristine_git_object: b34f612124c797c2a1106b9735708f679a90b74f
+  src/models/errors/idempotency-conflict-error.ts:
+    id: 9d062b2ee3f7
+    last_write_checksum: sha1:12fe38fa593ab97e31f5ade234910cb31e6124c2
+    pristine_git_object: 49c9aa268707221ccb1948b8413f75def52a018e
+  src/models/errors/index.ts:
+    id: c4e22507cb83
+    last_write_checksum: sha1:65bad04c4130b4d8865d9b738cbc1799521aa2d6
+    pristine_git_object: 9e0acc074c9d5066a485c452cc4b9c72703d04f6
+  src/models/errors/internal-error.ts:
+    id: a38ca5eeaec9
+    last_write_checksum: sha1:aabdcfa5d3a70e9f70b388244ae01198b6ec1d26
+    pristine_git_object: c85ff09168b2757df46fc47af36959093a0f4d04
+  src/models/errors/not-found-error.ts:
+    id: d8810f2bdcab
+    last_write_checksum: sha1:f8068a2fed68a68b1636bbde050e2dbb9ce847d4
+    pristine_git_object: 3af5a69efaa4845bb8e08b0b17ccc9b899070bb1
+  src/models/errors/payload-too-large-error.ts:
+    id: 3815cbff98c2
+    last_write_checksum: sha1:86648b27e0c595a06d2d6c37e7b093223caa9b64
+    pristine_git_object: fedd169923fda76d405ce1e02a39fe220d627443
+  src/models/errors/rate-limited-error.ts:
+    id: ebbf7c5d2d4b
+    last_write_checksum: sha1:c91448249d435b0a42b09b126d97a489a7507d82
+    pristine_git_object: f6f3f4109658c25305fadc39b7d4fb8eb212f88b
+  src/models/errors/response-validation-error.ts:
+    id: a6ce701a9571
+    last_write_checksum: sha1:f4a27d48e296bc89bb81e05a9c977643baba0f8e
+    pristine_git_object: d5f5ea0eb9d6ac95cb3966896f61ee4fbb45730b
+  src/models/errors/scope-mismatch-error.ts:
+    id: e32e0dfe7a94
+    last_write_checksum: sha1:5769f5fbf8474223f7d26d20f245290d15bbc321
+    pristine_git_object: dcabc7dd2600b65b8b8b48fa10160708d6c71b3b
+  src/models/errors/sdk-validation-error.ts:
+    id: 9b17e7ef247f
+    last_write_checksum: sha1:92771987c251f02fd86cfd824a3be709cd3c2837
+    pristine_git_object: db00022e05d55600252f401eb0e6ab46278e0b07
+  src/models/errors/service-unavailable-error.ts:
+    id: b53f6240158e
+    last_write_checksum: sha1:90a8e6d04c1688e3dbb001017b2c4ae1782aaf06
+    pristine_git_object: 2d8f86596af75c8dd3a355f7ffd2b6586b1a6436
+  src/models/errors/unauthenticated-error.ts:
+    id: 4c7c22cf429b
+    last_write_checksum: sha1:2bb7c008933b850c5c51131e8475415511f3ab8c
+    pristine_git_object: 2d1a6b33ceda62fc5e0e592989e6a6f35fd2c468
+  src/models/errors/unsupported-media-type-error.ts:
+    id: 0279721c25ea
+    last_write_checksum: sha1:b75df05d3e660a5998557daf177b5204860e42ef
+    pristine_git_object: ac8ce2f167836a8c2192f1d03f8f542ff23b2c58
+  src/models/errors/validation-error.ts:
+    id: 0fd2c27d92e0
+    last_write_checksum: sha1:e360bbdde72cfe9b3a877d0d01a1a49f22a6d02e
+    pristine_git_object: 47199a4f6a7d1957fe91e07cfc3efb500bc73958
+  src/models/idempotency-conflict-error.ts:
+    id: 05923e9572cb
+    last_write_checksum: sha1:d826edc7951d1e92913a6e669f63a5230710024d
+    pristine_git_object: 2b13a2f79bb1389c52aad8274cf2d71c09617f9f
+  src/models/index.ts:
+    id: f93644b0f37e
+    last_write_checksum: sha1:14f20771205ee795dfeb825c16560829a8aecbb4
+    pristine_git_object: d947a1dc212f6564fae67dbf9276bf0bd0fbb051
+  src/models/ingest-response.ts:
+    id: d6ab9ebf0635
+    last_write_checksum: sha1:b82232bc7224c861d0b5c55490793e81173b154a
+    pristine_git_object: 3cb582ee5f0ea19d6f467d234d8832ce42f5ab94
+  src/models/internal-error.ts:
+    id: ff4d93192af0
+    last_write_checksum: sha1:7bf391f7278983f1a643747e9cf46922a36b5ef1
+    pristine_git_object: ba8a0adda4ef7591ff421921d2bbb05ac7a708a2
+  src/models/not-found-error.ts:
+    id: 995faad51aa7
+    last_write_checksum: sha1:b623567689f7aa384733432ee9cc4463af8813c8
+    pristine_git_object: 4d471e44b8182f13cc3da37bef8ea6dea596aa5b
+  src/models/operations/get-event.ts:
+    id: 8355ef867609
+    last_write_checksum: sha1:1ac95ab5121eb147b68127bac465411b63797a2a
+    pristine_git_object: baa774d82f0ee66b7057e418d21a6a5122509f58
+  src/models/operations/index.ts:
+    id: 0d9ffaf774d2
+    last_write_checksum: sha1:98e3a4bc9831cab10a1150ef390550572ce3ac21
+    pristine_git_object: 5196cb05bedf2c90fb75a5ea3b0b06de2ef5416b
+  src/models/operations/ingest-event-batch.ts:
+    id: 5980d48a1a95
+    last_write_checksum: sha1:5816310cf47df3741368c5c93fcbf37c2d5b478e
+    pristine_git_object: abfb6e354c84eec5248ca40c7ee1307166727d33
+  src/models/operations/ingest-event.ts:
+    id: bfc6d643edab
+    last_write_checksum: sha1:541750a5402bdb89957f2f3c048323254da5bbf1
+    pristine_git_object: 31a50d28d943d152c16bde7f140c515bc7c23446
+  src/models/operations/list-events.ts:
+    id: e4c493cc1166
+    last_write_checksum: sha1:059cb2c95719a1c852e64990a9bfbbfc0d2cc880
+    pristine_git_object: 702b9c748c6f6ea709c4d286d248f1a7561b786f
+  src/models/payload-too-large-error.ts:
+    id: bfe4722508c5
+    last_write_checksum: sha1:6159548f3a96318d081b85dcd2048e5ce0bf9e5f
+    pristine_git_object: 038e8194ee54c41bf244a71ac377a78b301f623f
+  src/models/problem-details.ts:
+    id: 62842afaa10f
+    last_write_checksum: sha1:48b3d59ec2081faff139723144b0612fa48e0425
+    pristine_git_object: 4c585006f5b65894547a07d4c2b860f04055b703
+  src/models/query-response.ts:
+    id: 079bf99e6404
+    last_write_checksum: sha1:c38ff7697eef864affcbe773b50a5836c9bc04db
+    pristine_git_object: 29fb1bb558eb84413f3bdfccaf98c10bd8e4aa29
+  src/models/rate-limited-error.ts:
+    id: 42ce13aba7e6
+    last_write_checksum: sha1:dfe4989894380508d5b61136d5f75d0181ddee49
+    pristine_git_object: 39a3bd9054c16e38eeb9e62ee7b45ba59bf60113
+  src/models/scope-mismatch-error.ts:
+    id: 43d7fa422062
+    last_write_checksum: sha1:3146551e241d4380e25c4994992c16dd13ce8367
+    pristine_git_object: 49d99972f5eb4c4b55362b2eea963c0843307137
+  src/models/security.ts:
+    id: d90c6c784ca5
+    last_write_checksum: sha1:2139d3eeb02529939e4faebb4e9cf87b39c528f3
+    pristine_git_object: 06c5d2bcd5ecab8d5eea7c337744dc1e9043d948
+  src/models/service-unavailable-error.ts:
+    id: 3453b2d287d6
+    last_write_checksum: sha1:8582940dc3176e27cb04c455fea2d006f6a4436d
+    pristine_git_object: 0d47aa43b57a2010f9252f74b5f2f17e847b2f7a
+  src/models/unauthenticated-error.ts:
+    id: b26eea050088
+    last_write_checksum: sha1:049a5c89ed22d863c25b2dadc26a78e3599b7142
+    pristine_git_object: 34f6d0134dcf111de6f133929457201ca99492f5
+  src/models/unsupported-media-type-error.ts:
+    id: 325e2f3f297d
+    last_write_checksum: sha1:fa8cdab689c978d814349cb1d6371157161bb2fc
+    pristine_git_object: 76e0f1514865c0909cb5c12e515ba4706cf935d8
+  src/models/validation-error.ts:
+    id: b588017684bc
+    last_write_checksum: sha1:ac20ab0300f736d2e8eb61a4c3067b2e97868665
+    pristine_git_object: 74bccced828204b5fdc2d55c4b52d78d390ec532
+  src/sdk/events.ts:
+    id: c7d130088b17
+    last_write_checksum: sha1:4c1e64986b91ab56bec9b66d4886420d95f16b53
+    pristine_git_object: d8d0d89d3ced174271f45191c4332cfb7980c4b8
+  src/sdk/index.ts:
+    id: a857902a703f
+    last_write_checksum: sha1:ed6d64f2a6135349aa8498b8d8cff9ba85c7fb8f
+    pristine_git_object: ecac2264817bb369ff2dbf0f0e9029807e67ff77
+  src/sdk/sdk.ts:
+    id: 784571af2f69
+    last_write_checksum: sha1:0e62cae9f9860a39ce86570274d332fa765c23e7
+    pristine_git_object: ffc900825f364186f44db90750a5d8bfff80189b
+  src/types/async.ts:
+    id: fac8da972f86
+    last_write_checksum: sha1:3ff07b3feaf390ec1aeb18ff938e139c6c4a9585
+    pristine_git_object: 689dba5de50e8769e5f3bb913e3f42a146d15bc1
+  src/types/blobs.ts:
+    id: f8ab9b326c86
+    last_write_checksum: sha1:fd681458b532138913c372b05b3e16407abaa7a1
+    pristine_git_object: 3deb988d444f7d202eda723492d7c1d76c5c208d
+  src/types/const-date-time.ts:
+    id: b3487d7170f2
+    last_write_checksum: sha1:ce05316b31b373401875d5e962d63d2422e09cf2
+    pristine_git_object: 586ee46aa2273cdf680bb542b4ef5dd953a48a08
+  src/types/default-to-zero-value.ts:
+    id: 6e0f763ae8c8
+    last_write_checksum: sha1:2820c0bc8e71d475e79cc6b6947ca18d93f6310c
+    pristine_git_object: c4cad53db08687649a55c711c4f4b3a29f7b7d24
+  src/types/discriminated-union.ts:
+    id: ac1bf11344f7
+    last_write_checksum: sha1:06d1dfd89ad24e907e2ba49ea8d73ce48f3d486f
+    pristine_git_object: f41a6ac1571aee5c69b524359c7f5f786820aaee
+  src/types/enums.ts:
+    id: 4d03ddfe5100
+    last_write_checksum: sha1:d7d0ffad0c128a11c5feb1f0ae8f3b507ee03c14
+    pristine_git_object: a523bdde4b5b8144cf26414e32fc2319f2c466fa
+  src/types/fp.ts:
+    id: ae9f0fb8aab6
+    last_write_checksum: sha1:d24994d58f37a1ca106847fcc6d2e976c6f1c093
+    pristine_git_object: ccbe51eac69dfb0da5131f14fd753c4b47c1d527
+  src/types/index.ts:
+    id: cd7a0a5ed005
+    last_write_checksum: sha1:a591fec0ad2231615101ebb6a95cc4d043733a6c
+    pristine_git_object: d75cb43bf5811991f96203650c264af2b4c78b41
+  src/types/operations.ts:
+    id: 314da01dca47
+    last_write_checksum: sha1:c49e724cfb1259296381cb57bc0fcdd2eae45865
+    pristine_git_object: beb81e10f0b9eee2ed398a853fe6f737b743f818
+  src/types/primitives.ts:
+    id: 0cd7f4ac625d
+    last_write_checksum: sha1:c3ce85778bf82bc0f0d464067b04856d99ff4365
+    pristine_git_object: 3db7350c00d08b4a3daa1c2c4d3cf3608d834430
+  src/types/rfcdate.ts:
+    id: 9eb64906dcd6
+    last_write_checksum: sha1:8e5f382e02fe21c2f2e24deb1b7bbf8cddd3dd16
+    pristine_git_object: c79b3f53a3dd922aa2ace5a4191c8652cf9a8e89
+  src/types/smart-union.ts:
+    id: 2e3af2ad4ea7
+    last_write_checksum: sha1:22fe9063528cadf94640a776df4cf762e2b681e0
+    pristine_git_object: 4809527f774cde50ea4153a9a56c1c0929906d0f
+  src/types/streams.ts:
+    id: f99be9c4bf14
+    last_write_checksum: sha1:cc9ced2dd34a76c3a1bd7784ccda1cc3b37ab9a9
+    pristine_git_object: a0163e7a99cea88f21d0ad4ce3af1c720180ee20
+  src/types/unrecognized.ts:
+    id: 476605c40716
+    last_write_checksum: sha1:d33ac686528492f4cdc0dbf81ed343b4afe020fe
+    pristine_git_object: b7a2a13f3dff50663429df24ae2f55b647ff1084
+  tsconfig.json:
+    id: 61ebb9fd6e8c
+    last_write_checksum: sha1:79dc1550d921fefec69f8632ed3b24dad41ca2f6
+    pristine_git_object: 76110f883cac40bb04fb2f376cd69ea8c8d6d215
+examples:
+  ingestEvent:
+    roleChange:
+      parameters:
+        header:
+          idempotency-key: "evt_abc123_1714000000"
+      requestBody:
+        application/json: {"organization_id": "org_acme", "actor": {"id": "usr_a8f3k2", "type": "user"}, "action": "user.role.changed", "targets": [{"type": "user", "id": "usr_b1c4d8", "name": "Bob"}], "metadata": {"changes": {"role": {"from": "member", "to": "admin"}}}}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "received_at": "2025-09-19T14:12:11.853Z", "timestamp_anomaly": "future_skew_exceeded", "dlp_redacted_fields": ["<value 1>", "<value 2>"]}
+        "400":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 400, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "401":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 401, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "403":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 403, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "409":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 409, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "413":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 413, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "415":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 415, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "429":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 429, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "500":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 500, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "503":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 503, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+    speakeasy-default-ingest-event:
+      parameters:
+        header:
+          idempotency-key: "evt_abc123_1714000000"
+      requestBody:
+        application/json: {"organization_id": "<id>", "actor": {"id": "<id>", "type": "<value>"}, "action": "<value>", "targets": [{"type": "<value>", "id": "<id>"}]}
+      responses:
+        "201":
+          application/json: {"id": "<id>", "received_at": "2025-09-19T14:12:11.853Z", "timestamp_anomaly": "future_skew_exceeded", "dlp_redacted_fields": ["<value 1>", "<value 2>"]}
+        "400":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 400, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "401":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 401, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "403":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 403, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "409":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 409, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "413":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 413, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "415":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 415, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "429":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 429, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "500":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 500, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "503":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 503, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+  listEvents:
+    speakeasy-default-list-events:
+      parameters:
+        query:
+          limit: 50
+          enrich_actors: true
+      responses:
+        "200":
+          application/json: {"events": [{"id": "<id>", "environment_id": "<id>", "organization_id": "<id>", "received_at": "2025-05-02T18:39:29.072Z", "timestamp": "2024-05-19T10:37:04.208Z", "timestamp_anomaly": "past_window_exceeded", "actor": {"id": "<id>", "type": "<value>", "name": "<value>"}, "action": "<value>", "targets": [{"type": "<value>", "id": "<id>", "name": "<value>"}], "source": "<value>", "metadata": {"key": "<value>"}}], "next_cursor": "<value>"}
+        "400":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 400, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "401":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 401, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "403":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 403, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "429":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 429, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "500":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 500, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "503":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 503, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+  ingestEventBatch:
+    mixedBatch:
+      parameters:
+        header:
+          idempotency-key: "evt_abc123_1714000000"
+      requestBody:
+        application/json: {"events": [{"organization_id": "org_acme", "actor": {"id": "usr_a8f3k2", "type": "user"}, "action": "doc.shared", "targets": [{"type": "doc", "id": "doc_42"}]}, {"organization_id": "org_acme", "actor": {"id": "alice@example.com", "type": "user"}, "action": "doc.viewed", "targets": [{"type": "doc", "id": "doc_99"}]}]}
+      responses:
+        "207":
+          application/json: {"accepted": 703335, "rejected": 887047, "results": [{"status": "accepted", "index": 778886, "id": "<id>", "received_at": "2026-02-19T15:56:19.397Z", "dlp_redacted_fields": null}]}
+        "400":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 400, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "401":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 401, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "403":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 403, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "409":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 409, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "413":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 413, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "415":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 415, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "429":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 429, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "500":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 500, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "503":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 503, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+    speakeasy-default-ingest-event-batch:
+      parameters:
+        header:
+          idempotency-key: "evt_abc123_1714000000"
+      requestBody:
+        application/json: {"events": [{"organization_id": "<id>", "actor": {"id": "<id>", "type": "<value>"}, "action": "<value>", "targets": []}]}
+      responses:
+        "207":
+          application/json: {"accepted": 703335, "rejected": 887047, "results": [{"status": "accepted", "index": 778886, "id": "<id>", "received_at": "2026-02-19T15:56:19.397Z", "dlp_redacted_fields": null}]}
+        "400":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 400, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "401":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 401, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "403":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 403, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "409":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 409, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "413":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 413, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "415":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 415, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "429":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 429, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "500":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 500, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "503":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 503, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+  getEvent:
+    speakeasy-default-get-event:
+      parameters:
+        path:
+          id: "09f9234a-1e79-46a9-b3c1-d055b6d2a78c"
+      responses:
+        "200":
+          application/json: {"id": "<id>", "environment_id": "<id>", "organization_id": "<id>", "received_at": "2025-10-13T04:04:55.666Z", "timestamp": "2025-07-11T23:40:30.191Z", "timestamp_anomaly": "past_window_exceeded", "actor": {"id": "<id>", "type": "<value>", "name": "<value>"}, "action": "<value>", "targets": [], "source": "<value>", "metadata": {"key": "<value>", "key1": "<value>", "key2": "<value>"}}
+        "400":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 400, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "401":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 401, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "403":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 403, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "404":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 404, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "429":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 429, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "500":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 500, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+        "503":
+          application/problem+json: {"type": "https://api.auditlocker.co/errors/validation_error", "title": "Validation Error", "status": 503, "detail": "actor.id must not be an email address", "instance": "urn:uuid:01912f77-1234-7890-abcd-ef0123456789"}
+examplesVersion: 1.0.2

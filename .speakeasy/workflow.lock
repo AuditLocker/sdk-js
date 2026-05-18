@@ -1,0 +1,26 @@
+speakeasyVersion: 1.763.1
+sources:
+    AuditLocker API:
+        sourceNamespace: audit-locker-api
+        sourceRevisionDigest: sha256:112019ad0c1f2a4df220828a8474cc419d0392bf5a83bc843684b48582431195
+        sourceBlobDigest: sha256:4e0c39e648afe2854eef9ce58a5c899448acd3af4d3b88c1cd33751ab02964c8
+        tags:
+            - latest
+targets:
+    audit-locker:
+        source: AuditLocker API
+        sourceNamespace: audit-locker-api
+        sourceRevisionDigest: sha256:112019ad0c1f2a4df220828a8474cc419d0392bf5a83bc843684b48582431195
+        sourceBlobDigest: sha256:4e0c39e648afe2854eef9ce58a5c899448acd3af4d3b88c1cd33751ab02964c8
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: 1.763.1
+    sources:
+        AuditLocker API:
+            inputs:
+                - location: registry.speakeasyapi.dev/auditlocker/auditlocker/audit-locker-api
+            output: .speakeasy/out.openapi.yaml
+    targets:
+        audit-locker:
+            target: typescript
+            source: AuditLocker API

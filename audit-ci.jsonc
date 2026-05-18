@@ -1,0 +1,13 @@
+{
+  "$schema": "https://github.com/IBM/audit-ci/raw/main/docs/schema.json",
+  "package-manager": "pnpm",
+  "moderate": true,
+  "pass-enoaudit": true,
+  "retry-count": 5,
+  // Empty by design. The former Vite dev-server entries are gone: the
+  // patched transitive versions are forced via `overrides` in
+  // pnpm-workspace.yaml (vite ^8, postcss >=8.5.10), so the advisories are
+  // remediated rather than risk-accepted. An entry here is per-advisory
+  // risk acceptance and is NOT added without discussion (see AGENTS.md).
+  "allowlist": [],
+}

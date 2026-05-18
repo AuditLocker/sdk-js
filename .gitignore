@@ -1,0 +1,50 @@
+/.eslintcache
+/models
+/models/errors
+/types
+/node_modules
+/examples/node_modules
+/lib
+/sdk
+/funcs
+/react-query
+/mcp-server
+/hooks
+/index.*
+/core.*
+/bin
+/cjs
+/esm
+/dist
+/.tsbuildinfo
+/.tshy
+/.tshy-*
+/__tests__
+**/.speakeasy/temp/
+**/.speakeasy/logs/
+/.speakeasy/reports
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+# env
+.env
+.env.local
+.env.*.local
+# maintainer-only runbook (cross-repo / secret-bearing detail kept out of
+# the public AGENTS.md)
+AGENTS.local.md
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# editor / os
+.DS_Store
+.vscode/
+.idea/
+*.swp
+# Claude Code per-user state
+.claude/

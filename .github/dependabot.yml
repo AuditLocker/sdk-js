@@ -1,0 +1,38 @@
+version: 2
+
+# 7-day cooldown on all ecosystems — new versions must be published for at
+# least a week before Dependabot opens a PR. Layers with pnpm's
+# minimumReleaseAge (also 7 days) enforced at resolve time.
+
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 10
+    labels:
+      - 'dependencies'
+    cooldown:
+      default-days: 7
+      semver-major-days: 7
+      semver-minor-days: 7
+      semver-patch-days: 7
+    groups:
+      dev-deps:
+        dependency-type: 'development'
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+      - 'github-actions'
+    cooldown:
+      default-days: 7
+      semver-major-days: 7
+      semver-minor-days: 7
+      semver-patch-days: 7
