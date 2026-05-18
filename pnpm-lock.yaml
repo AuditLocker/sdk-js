@@ -31,6 +31,9 @@ importers:
       publint:
         specifier: ^0.3
         version: 0.3.18
+      rolldown:
+        specifier: 1.0.0-rc.18
+        version: 1.0.0-rc.18
       tshy:
         specifier: ^3.3.2
         version: 3.3.2

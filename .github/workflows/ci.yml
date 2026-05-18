@@ -9,6 +9,7 @@
 #   5. build     — tshy (dual CJS+ESM; required before test — CJS smoke needs dist/)
 #   6. test      — vitest
 #   7. publish   — publint + attw (package.json + type export correctness)
+#   8. bundle    — rolldown combined (SDK + Zod) minified-ESM size budget
 #
 # Node matrix: 22, 24 (SDK supports >=22; Node 20 EOL'd 2026-04-30). We
 # develop on 24 (.nvmrc); 22 is the published floor (engines.node).
@@ -175,3 +176,34 @@ jobs:
       - name: Bun import smoke
         if: matrix.runtime == 'bun'
         run: bun test/runtime-smoke.mjs
+
+  # ── 8. Bundle size gate ────────────────────────────────────────────────────
+  # Combined (SDK + Zod) minified-ESM size, measured with the pinned rolldown.
+  # Combined is the failing gate; sdk-only is logged informational. Self-
+  # contained (builds dist/ then measures) — see scripts/bundle-size.mjs.
+  bundle-size:
+    name: bundle size
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@a15d269cd4658e1107c09f1fabf4cbd7bd1f308a # v4.4.0
+        with:
+          version: 10
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Bundle size (combined gate + sdk-only informational)
+        run: node scripts/bundle-size.mjs
