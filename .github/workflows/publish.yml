@@ -1,0 +1,71 @@
+# =============================================================================
+# Publish @auditlocker/sdk to npm via OIDC trusted publishing.
+#
+# No NPM_TOKEN anywhere (classic/automation tokens were removed 2025-12).
+# npm exchanges the GitHub OIDC id-token for a short-lived publish token and
+# generates provenance automatically — no --provenance flag, no token.
+# Requires: repo public + package public (both true), npm >= 11.5.1,
+# Node >= 22.14.0, `id-token: write`.
+#
+# `npm publish` (not `pnpm publish`): pnpm/pnpm#9812 delegates to npm but has
+# a documented same-setup OIDC failure; npm publish is the verified path.
+# `--ignore-scripts`: dist/ is already built by `pnpm build`; skip the
+# redundant prepublishOnly rebuild. OIDC + provenance live in npm's publish
+# flow, not lifecycle scripts, so --ignore-scripts does not disable them.
+# =============================================================================
+
+name: publish
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read # checkout
+  id-token: write # OIDC trusted publishing
+
+jobs:
+  publish:
+    name: publish to npm
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: npm # manual-approval gate; matches the npm trusted-publisher registration
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@a15d269cd4658e1107c09f1fabf4cbd7bd1f308a # v4.4.0
+        with:
+          version: 10
+          run_install: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24 # .nvmrc; >= 22.14.0 required for trusted publishing
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      # Trusted publishing requires npm CLI >= 11.5.1. Pinned exact (npm
+      # registry versions are immutable + integrity-verified — the npm analog
+      # of SHA-pinning an Action). Bump deliberately.
+      - name: Pin npm
+        run: |
+          npm install -g npm@11.14.1
+          npm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      # No NPM_TOKEN, no --provenance. publishConfig.provenance:true in
+      # package.json is harmless/redundant under trusted publishing.
+      - name: Publish
+        run: npm publish --ignore-scripts

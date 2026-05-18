@@ -1,0 +1,87 @@
+# =============================================================================
+# Regeneration drift gate (sdk-js plan Phase 6.3).
+#
+# Re-runs `pnpm regen` against the Speakeasy API registry and fails if the
+# result differs from the committed generated code — catches a forgot-regen,
+# a hand-edited generated file, or a reverted facade entry.
+#
+# `pnpm install` MUST run BEFORE `speakeasy run`: gen.yaml
+# `compileCommand: ["pnpm","run","build"]` replaces Speakeasy's whole compile
+# step and does NOT install deps; a cold CI tree has no node_modules.
+#
+# Speakeasy CLI version is parsed from .speakeasy/workflow.yaml
+# (`speakeasyVersion`) — single source of truth, no hardcoded duplicate.
+#
+# SPEAKEASY_API_KEY is a repo Actions secret (the registry is auth'd; not
+# OIDC-able). Runs on push to main + manual dispatch only — Actions secrets
+# are not exposed to fork pull requests.
+# =============================================================================
+
+name: regenerate
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: regenerate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify-regen:
+    name: regen drift gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@a15d269cd4658e1107c09f1fabf4cbd7bd1f308a # v4.4.0
+        with:
+          version: 10
+          run_install: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      # BEFORE speakeasy run — compileCommand is pnpm-based and does not install.
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Speakeasy CLI (pinned to workflow.yaml)
+        run: |
+          VER="$(grep -E '^speakeasyVersion:' .speakeasy/workflow.yaml | awk '{print $2}')"
+          if [ -z "$VER" ]; then echo "::error::speakeasyVersion not found in workflow.yaml"; exit 1; fi
+          curl -fsSL https://go.speakeasy.com/cli-install.sh | sh -s -- -b "$HOME/.local/bin" "v$VER"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/speakeasy" --version
+
+      - name: Regenerate
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+        run: pnpm regen
+
+      # Scope strictly to generated SDK code. `pnpm regen` is nondeterministic
+      # in its bookkeeping — .speakeasy/gen.lock carries a fresh generation_id
+      # + pristine hashes every run, and Speakeasy/oxfmt reorder package.json
+      # keys — so a whole-tree check would fail on every push. src/ + docs/
+      # ARE deterministic across a no-spec-change regen; that is the real
+      # forgot-regen / hand-edited-generated-code signal. A reverted facade
+      # entry (package.json exports) is covered separately by
+      # test/regen-survival.test.ts in the `check` job.
+      - name: Fail on drift (generated code)
+        run: |
+          if [ -n "$(git status --porcelain -- src docs)" ]; then
+            echo "::error::Generated SDK is stale or hand-edited. Run 'pnpm regen' and commit src/ + docs/."
+            git status --porcelain -- src docs
+            git diff -- src docs
+            exit 1
+          fi
+          echo "Generated SDK (src/ + docs/) matches a fresh regen ✓"
