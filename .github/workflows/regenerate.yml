@@ -36,6 +36,12 @@ jobs:
     name: regen drift gate
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # Scopes SPEAKEASY_API_KEY to a dedicated environment (zizmor
+    # secrets-outside-env) — same pattern as publish.yml's `npm`. A place to
+    # hang branch/protection rules on the registry credential later; today
+    # the trigger guard (push to main + dispatch only, no fork PRs) is what
+    # actually keeps it off untrusted runs.
+    environment: speakeasy
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:

@@ -10,6 +10,12 @@
 #   6. test      — vitest
 #   7. publish   — publint + attw (package.json + type export correctness)
 #   8. bundle    — rolldown combined (SDK + Zod) minified-ESM size budget
+#   9. workflow-lint — zizmor (auditor) + actionlint over .github/workflows
+#
+# `audit` gates `check` and `bundle-size` via `needs:` so nothing runs
+# `pnpm install` until the advisory check passes (a compromised postinstall
+# must not execute ahead of audit). `runtimes` is gated transitively through
+# `check`. `workflow-lint` is independent — it never installs deps.
 #
 # Node matrix: 22, 24 (SDK supports >=22; Node 20 EOL'd 2026-04-30). We
 # develop on 24 (.nvmrc); 22 is the published floor (engines.node).
@@ -72,6 +78,7 @@ jobs:
   check:
     name: check (node ${{ matrix.node }})
     runs-on: ubuntu-latest
+    needs: audit # no pnpm install until the advisory gate passes
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -191,6 +198,7 @@ jobs:
   bundle-size:
     name: bundle size
     runs-on: ubuntu-latest
+    needs: audit # no pnpm install until the advisory gate passes
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -214,3 +222,37 @@ jobs:
 
       - name: Bundle size (combined gate + sdk-only informational)
         run: node scripts/bundle-size.mjs
+
+  # ── 9. Workflow lint ───────────────────────────────────────────────────────
+  # Static analysis of .github/workflows itself. zizmor (auditor persona —
+  # strictest) enforces the SHA-pin / least-privilege / secret-scoping
+  # invariants by tooling instead of by review; actionlint shellchecks every
+  # run: block. Independent gate, no pnpm install, contents: read only.
+  # zizmor runs offline (--no online-audits): deterministic, no GITHUB_TOKEN,
+  # safe on fork PRs. zizmor version is pinned (bump deliberately, like the
+  # npm/speakeasy pins); the action and actionlint installer are SHA/tag
+  # pinned and Dependabot-tracked via the github-actions ecosystem.
+  workflow-lint:
+    name: workflow lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: zizmor (auditor persona, offline)
+        uses: zizmorcore/zizmor-action@5f14fd08f7cf1cb1609c1e344975f152c7ee938d # v0.5.6
+        with:
+          version: 1.25.2 # pinned; bump with the local dev version together
+          persona: auditor
+          online-audits: false
+          advanced-security: false # no SARIF upload — keeps perms at contents: read
+          inputs: .github/workflows/
+
+      - name: actionlint (pinned installer)
+        run: |
+          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.9/scripts/download-actionlint.bash) 1.7.9
+          ./actionlint -color

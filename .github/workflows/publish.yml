@@ -25,9 +25,10 @@ concurrency:
   group: publish-${{ github.ref }}
   cancel-in-progress: false
 
-permissions:
-  contents: read # checkout
-  id-token: write # OIDC trusted publishing
+# No workflow-level permissions — id-token: write is scoped to the single
+# job that needs it (zizmor excessive-permissions: workflow-level write
+# tokens are visible to every job, including any future ones).
+permissions: {}
 
 jobs:
   publish:
@@ -35,6 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: npm # manual-approval gate; matches the npm trusted-publisher registration
+    permissions:
+      contents: read # checkout
+      id-token: write # OIDC trusted publishing
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
@@ -49,7 +53,10 @@ jobs:
         with:
           node-version: 24 # .nvmrc; >= 22.14.0 required for trusted publishing
           registry-url: https://registry.npmjs.org
-          cache: pnpm
+          # No pnpm cache on the publish path (zizmor cache-poisoning): a
+          # cache entry populated by a lower-trust trigger must not be able
+          # to influence a published artifact. This job does a fresh
+          # --frozen-lockfile install + build; the cache miss is one install.
 
       # Trusted publishing requires npm CLI >= 11.5.1. Pinned exact (npm
       # registry versions are immutable + integrity-verified — the npm analog
