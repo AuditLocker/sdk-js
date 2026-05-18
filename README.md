@@ -15,7 +15,7 @@ JavaScript / TypeScript SDK for [AuditLocker](https://auditlocker.co) — the ma
 
 ## Development
 
-This repo uses [pnpm 10](https://pnpm.io/) with a deliberately strict, secure-by-default toolchain (oxlint / oxfmt / tsgo — no ESLint, Prettier, or tsc). The full operational guide lives in [AGENTS.md](./AGENTS.md). Quickstart:
+This repo uses [pnpm 11](https://pnpm.io/) with a deliberately strict, secure-by-default toolchain (oxlint / oxfmt / tsgo — no ESLint, Prettier, or tsc). The full operational guide lives in [AGENTS.md](./AGENTS.md). Quickstart:
 
 ```bash
 nvm use                                   # switch to Node 24 (.nvmrc)
@@ -48,7 +48,7 @@ Supply-chain hardening in `pnpm-workspace.yaml`:
 | Concern                                     | Setting                                           |
 | ------------------------------------------- | ------------------------------------------------- |
 | Refuse packages younger than 7 days         | `minimumReleaseAge: 10080`                        |
-| No unreviewed postinstall scripts           | `strictDepBuilds: true` + `onlyBuiltDependencies` |
+| No unreviewed postinstall scripts           | `strictDepBuilds: true` + `allowBuilds`           |
 | Publisher regression detection              | `trustPolicy: no-downgrade`                       |
 | Registry-only transitive deps               | `blockExoticSubdeps: true`                        |
 | Peer dep mismatches are errors              | `strictPeerDependencies: true`                    |

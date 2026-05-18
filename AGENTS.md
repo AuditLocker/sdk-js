@@ -14,7 +14,7 @@ Operational guide for AI agents (Claude Code, Cursor, Aider, Codex CLI) and huma
 - `.speakeasy/workflow.yaml` — source + target. Pins `speakeasyVersion`. Spec source and registry are maintainer configuration — regeneration is a maintainer task (see `AGENTS.local.md` if you have it).
 - `.speakeasy/gen.lock` — generation checksums/feature versions. Committed.
 - `package.json` — Speakeasy owns name/version/type/exports/scripts(lint,build,prepublishOnly)/deps. Everything else is preserved via `additionalPackageJSON` / `additionalScripts` / `additionalDependencies` in `gen.yaml` — **edit those, not package.json directly** (direct edits are wiped on regen).
-- `pnpm-workspace.yaml` — supply-chain settings + `packages: ['.']` (required, see gotcha). Transitive-security `overrides` live in package.json `pnpm.overrides` (via `gen.yaml` `additionalPackageJSON`), NOT here — see gotcha.
+- `pnpm-workspace.yaml` — all pnpm settings (pnpm 11 reads `.npmrc` for auth/registry only), supply-chain gates, `packages: ['.']` (required, see gotcha), and transitive-security `overrides`. Not Speakeasy-managed; edit directly.
 - `pnpm-lock.yaml` — committed lockfile with integrity hashes and tarball URLs.
 - `tsconfig.json` — Speakeasy-generated; `tshy` drives the build.
 - `.oxlintrc.json` — Speakeasy-generated, tuned for generated code. `.oxfmtrc.json` — hand-written; ignore-lists all Speakeasy-managed paths (we don't reformat generated code).
@@ -27,7 +27,7 @@ Toolchain: oxlint / oxfmt / tsgo (no ESLint / Prettier / tsc).
 
 | Concern            | Tool                                               | Why                                                                        |
 | ------------------ | -------------------------------------------------- | -------------------------------------------------------------------------- |
-| Package manager    | **pnpm 10**                                        | `minimumReleaseAge` + `strictDepBuilds` + `trustPolicy` supply-chain gates |
+| Package manager    | **pnpm 11** (pinned via `packageManager`)          | `minimumReleaseAge` + `strictDepBuilds` + `trustPolicy` supply-chain gates |
 | SDK generator      | **Speakeasy CLI** (pinned in `workflow.yaml`)      | Spec-driven; near-daily releases, so the version is pinned, never floating |
 | Build              | **tshy**                                           | Dual CJS+ESM emit from one TS source (Speakeasy-managed)                   |
 | Lint               | **oxlint**                                         | Speakeasy default for generated code; upstream toolchain parity            |
@@ -83,7 +83,7 @@ Settings live in `pnpm-workspace.yaml` with inline comments — read it directly
 - **audit-ci runs before `pnpm install` in CI** — `pnpm dlx`, not a devDependency.
 - **Dependabot cooldown** (`.github/dependabot.yml`): 7-day cooldown on all tiers.
 - **npm provenance:** `publishConfig.provenance: true` (preserved via `additionalPackageJSON`). Requires `id-token: write` in the publish job.
-- **`audit-ci.jsonc` allowlist is empty by design.** Transitive advisories are remediated by forcing patched versions in package.json `pnpm.overrides` (managed via `gen.yaml` `additionalPackageJSON`; currently `vite ^8`, `postcss >=8.5.10` — the SDK never runs a Vite dev server, but we patch rather than allowlist). Adding an allowlist entry is per-advisory risk acceptance and is NOT done without discussion.
+- **`audit-ci.jsonc` allowlist is empty by design.** Transitive advisories are remediated by forcing patched versions in `pnpm-workspace.yaml` `overrides` (currently `vite ^8`, `postcss >=8.5.10` — the SDK never runs a Vite dev server, but we patch rather than allowlist). Adding an allowlist entry is per-advisory risk acceptance and is NOT done without discussion.
 
 ## Gotchas
 
@@ -93,11 +93,11 @@ Settings live in `pnpm-workspace.yaml` with inline comments — read it directly
 
 ### `packages: ['.']` is required in `pnpm-workspace.yaml`
 
-This is a single-package repo, but the key is **not** optional under pnpm 10.20+: `verifyDepsBeforeRun: error` validates against `node_modules/.pnpm-workspace-state-v1.json`, which pnpm only writes when a workspace is declared. Without `packages: ['.']` that file is never created and every `pnpm run`/`pnpm exec` fails `ERR_PNPM_VERIFY_DEPS_BEFORE_RUN` unconditionally (not just after a regen). Do not remove the key.
+Single-package repo, but the key is **not** optional: `verifyDepsBeforeRun: error` validates against pnpm's workspace-state file, which pnpm only writes when a workspace is declared. Without `packages: ['.']` every `pnpm run`/`exec` fails `ERR_PNPM_VERIFY_DEPS_BEFORE_RUN` unconditionally. Do not remove the key.
 
-### `pnpm.overrides` lives in package.json, not `pnpm-workspace.yaml`
+### `overrides` live in `pnpm-workspace.yaml`
 
-Same pnpm 10.20 `verifyDepsBeforeRun: error` class of bug (pnpm#9777): `overrides` declared in `pnpm-workspace.yaml` makes every `pnpm run`/`exec` fail `ERR_PNPM_VERIFY_DEPS_BEFORE_RUN: Setting overrides of lockfile … is outdated` — persistently, even immediately after a clean `pnpm install --force`. package.json `pnpm.overrides` is the long-stable canonical location the verify routine handles correctly, so the transitive-security overrides live there (managed via `gen.yaml` `additionalPackageJSON.pnpm.overrides` so they survive regen). Do not "tidy" them back into `pnpm-workspace.yaml`.
+pnpm 11 stopped reading the package.json `pnpm` field (it warns and ignores `pnpm.overrides`), so transitive-security overrides live in `pnpm-workspace.yaml` `overrides`. The old pnpm#9777 interaction with `verifyDepsBeforeRun: error` that previously forced them into package.json is fixed in pnpm 11. They survive regen because Speakeasy never rewrites `pnpm-workspace.yaml`. Do not move them back to package.json — pnpm 11 will silently drop them.
 
 ### Re-install after every `speakeasy run`
 
@@ -105,7 +105,7 @@ A regen rewrites `package.json` (deps via `additionalDependencies`, scripts via 
 
 ### `strictDepBuilds` will bite on new deps with postinstall
 
-`"ignored build scripts: <pkg>"` → review the script, add to `onlyBuiltDependencies` in `pnpm-workspace.yaml`. **Never** set `strictDepBuilds: false`.
+`"ignored build scripts: <pkg>"` → review the script, add to `allowBuilds` in `pnpm-workspace.yaml` (`<pkg>: true` to run it, `false` to acknowledge-and-skip). **Never** set `strictDepBuilds: false`.
 
 ### Single approved runtime dep: Zod v4 mini
 

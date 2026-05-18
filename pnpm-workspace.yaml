@@ -1,65 +1,63 @@
-# =============================================================================
-# Supply-chain security (pnpm 10.x+).
-#
-# Workspace-of-one. `packages: ['.']` is required (not optional) under
-# pnpm 10.20+: `verifyDepsBeforeRun: error` validates against
-# `node_modules/.pnpm-workspace-state.json`, which pnpm only writes when a
-# workspace is declared. Without the key the state file is never created
-# and every `pnpm run`/`pnpm exec` fails ERR_PNPM_VERIFY_DEPS_BEFORE_RUN —
-# unconditionally, not just after a Speakeasy regen. All other settings
-# below are still read from this file regardless.
-#
+# Supply-chain hardened pnpm config (pnpm 11).
+# Under pnpm 11 `.npmrc` is auth/registry only — every pnpm setting lives here.
 # See: https://pnpm.io/supply-chain-security and https://pnpm.io/settings
+
+# Workspace-of-one. Required, not optional: verifyDepsBeforeRun validates
+# against pnpm's workspace-state file, which is only written for a declared
+# workspace. Omit it and every `pnpm run`/`exec` fails.
 packages:
   - .
-# =============================================================================
 
-# Refuse to install any package version younger than 7 days.
-# 10080 minutes = 7 * 24 * 60.
+# engine-strict / update-notifier moved here from .npmrc (pnpm 11 ignores them
+# there). enablePrePostScripts is pinned because pnpm 11 flipped its default
+# to true; `prepublishOnly` is the only hook (publish uses `npm publish`).
+engineStrict: true
+updateNotifier: false
+enablePrePostScripts: true
+
+# Refuse any package version younger than 7 days (10080 = 7*24*60 min).
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude: []
 
-# Transitive deps must resolve from a real registry — no git URLs or tarballs
-# from indirect dependencies.
+# Transitive deps must resolve from a real registry — no git URLs or tarballs.
 blockExoticSubdeps: true
 
-# Refuse install if trust signals (maintainer set, provenance, publisher
-# signatures) have regressed compared to earlier releases.
+# Refuse install if trust signals (maintainers, provenance, signatures)
+# regress versus earlier releases.
 trustPolicy: no-downgrade
-trustPolicyExclude: []
+trustPolicyExclude:
+  # chokidar 4.x ships without npm provenance; 3.x had it. A long-standing
+  # maintainer publishing habit (paulmillr), not a compromise signal.
+  # minimumReleaseAge still applies. Transitive (wrangler → … → chokidar).
+  - chokidar
 
-# Fail install if any dep has an unreviewed lifecycle script. Each allowed
-# package is a deliberate decision, logged in the PR that adds it.
+# Fail install on any unreviewed lifecycle script. pnpm 11 replaced
+# onlyBuiltDependencies/ignoredBuiltDependencies with one allowBuilds map:
+# `true` runs the script, `false` acknowledges it without running it.
 strictDepBuilds: true
-onlyBuiltDependencies:
-  - esbuild # platform binary download (via vitest → vite → esbuild)
-
-# Acknowledged but NOT built — their lifecycle scripts are deliberately not
-# run (keeps the build surface minimal; clears ERR_PNPM_IGNORED_BUILDS
-# without granting them script execution). Both arrive via wrangler (Workers
-# smoke). workerd ships its runtime binary via per-platform
-# optionalDependencies (@cloudflare/workerd-*), so its install.js postinstall
-# is not required; sharp's native image build is never exercised by the
-# import/construct smoke. If a clean-CI run shows workerd cannot resolve its
-# binary without the postinstall, promote `workerd` to onlyBuiltDependencies.
-ignoredBuiltDependencies:
-  - workerd
-  - sharp
+allowBuilds:
+  esbuild: true # native binary download (vitest → vite → esbuild)
+  # workerd/sharp arrive via wrangler (Workers smoke); scripts skipped — workerd
+  # ships its binary via @cloudflare/workerd-* optionalDeps, sharp's native
+  # build is never exercised. Flip workerd to true if its binary won't resolve.
+  workerd: false
+  sharp: false
 
 # Peer dep mismatches are real bugs.
 autoInstallPeers: false
 strictPeerDependencies: true
 
-# Every `pnpm <script>` verifies node_modules matches the lockfile first.
+# Verify node_modules matches the lockfile before every script.
 verifyDepsBeforeRun: error
 
-# Include full tarball URLs in the lockfile for artifact provenance.
+# Full tarball URLs in the lockfile for artifact provenance.
 lockfileIncludeTarballUrl: true
 
-# NOTE: transitive security `overrides` live in package.json `pnpm.overrides`
-# (managed via .speakeasy/gen.yaml `additionalPackageJSON` so they survive
-# regen), NOT here. `overrides` in pnpm-workspace.yaml + `verifyDepsBeforeRun:
-# error` is an overeager-validation combination under pnpm 10.20 (pnpm#9777):
-# every `pnpm run`/`exec` fails "Setting overrides of lockfile is outdated"
-# even immediately after a clean install. package.json `pnpm.overrides` is
-# the long-stable canonical location the verify routine handles correctly.
+# Transitive-security overrides. pnpm 11 stopped reading the package.json
+# `pnpm` field, so these live here (the old pnpm#9777 interaction with
+# verifyDepsBeforeRun is fixed in pnpm 11). Not Speakeasy-managed — survives
+# regen because Speakeasy never rewrites this file. The SDK never runs a Vite
+# dev server; we patch rather than allowlist the advisories.
+overrides:
+  postcss: '>=8.5.10'
+  vite: ^8
