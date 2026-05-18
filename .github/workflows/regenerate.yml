@@ -1,5 +1,5 @@
 # =============================================================================
-# Regeneration drift gate (sdk-js plan Phase 6.3).
+# Regeneration drift gate.
 #
 # Re-runs `pnpm regen` against the Speakeasy API registry and fails if the
 # result differs from the committed generated code — catches a forgot-regen,
