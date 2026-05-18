@@ -34,8 +34,8 @@
     "provenance": true
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/auditlocker/sdk-js.git"
+    "url": "git+https://github.com/auditlocker/sdk-js.git",
+    "type": "git"
   },
   "type": "module",
   "tshy": {
@@ -59,14 +59,14 @@
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tshy",
     "prepublishOnly": "npm run build",
+    "regen": "speakeasy run --skip-versioning && node scripts/repoint-entry.mjs && pnpm install && pnpm build",
+    "test": "vitest run",
+    "typecheck": "tsgo --noEmit",
     "attw": "attw --pack . --profile node16",
     "audit:ci": "pnpm dlx audit-ci@7.1.0 --config ./audit-ci.jsonc",
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
-    "publint": "publint",
-    "regen": "speakeasy run --skip-versioning && node scripts/repoint-entry.mjs && pnpm install && pnpm build",
-    "test": "vitest run",
-    "typecheck": "tsgo --noEmit"
+    "publint": "publint"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -78,7 +78,8 @@
     "rolldown": "1.0.0-rc.18",
     "tshy": "^3.3.2",
     "typescript": "~5.8.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.5",
+    "wrangler": "^4.90.0"
   },
   "dependencies": {
     "zod": "^3.25.65 || ^4.0.0"

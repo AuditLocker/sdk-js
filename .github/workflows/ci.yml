@@ -124,10 +124,11 @@ jobs:
 
   # ── 7. Multi-runtime import smoke ──────────────────────────────────────────
   # Node ESM + Node CJS are covered by the `check` matrix (CJS via
-  # test/cjs-require.test.ts). This job adds the edge runtimes: Deno and Bun
-  # each import the built ESM bundle and construct the client. No network —
-  # a networked staging round-trip is out of scope here. Catches
-  # node:-prefixed imports and WebCrypto gaps that the Node jobs can't.
+  # test/cjs-require.test.ts). This job adds the edge runtimes: Deno, Bun,
+  # and Cloudflare Workers each import the built ESM bundle and construct the
+  # client. No network. Catches node:-prefixed imports and WebCrypto gaps
+  # the Node jobs can't. Workers runs under local workerd via wrangler's
+  # programmatic dev API (no Cloudflare account) with nodejs_compat OFF.
   runtimes:
     name: runtime smoke (${{ matrix.runtime }})
     runs-on: ubuntu-latest
@@ -136,7 +137,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runtime: [deno, bun]
+        runtime: [deno, bun, workers]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
@@ -176,6 +177,12 @@ jobs:
       - name: Bun import smoke
         if: matrix.runtime == 'bun'
         run: bun test/runtime-smoke.mjs
+
+      # workerd + wrangler come from pnpm install; Node is already set up.
+      # Verifies the README "Cloudflare Workers" runtime claim.
+      - name: Workers import smoke
+        if: matrix.runtime == 'workers'
+        run: node test/worker-smoke-runner.mjs
 
   # ── 8. Bundle size gate ────────────────────────────────────────────────────
   # Combined (SDK + Zod) minified-ESM size, measured with the pinned rolldown.

@@ -44,6 +44,7 @@ typescript:
       publint: ^0.3
       rolldown: 1.0.0-rc.18
       vitest: ^4.1.5
+      wrangler: ^4.90.0
     peerDependencies: {}
   additionalPackageJSON:
     bugs:
