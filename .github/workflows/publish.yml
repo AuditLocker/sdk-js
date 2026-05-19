@@ -49,9 +49,9 @@ jobs:
           run_install: false
 
       # No `cache:` on the publish path — nothing for a lower-trust trigger
-      # to poison. zizmor ignore is scoped to this step, not the file, so a
-      # future `cache:` anywhere here still trips the audit.
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0 zizmor: ignore[cache-poisoning]
+      # to poison. Step-scoped, so a future `cache:` here still trips zizmor.
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        # zizmor: ignore[cache-poisoning]
         with:
           node-version: 24 # .nvmrc; >= 22.14.0 for trusted publishing
           registry-url: https://registry.npmjs.org
