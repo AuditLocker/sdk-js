@@ -1,19 +1,7 @@
-# zizmor configuration — https://docs.zizmor.sh/configuration/
+# zizmor config — https://docs.zizmor.sh/configuration/
+# CI runs `zizmor --persona=auditor --offline` (auto-discovers this file).
 #
-# CI runs `zizmor --persona=auditor --offline`; zizmor auto-discovers this
-# file. Entries here are per-finding, documented risk acceptance — the
-# zizmor analogue of an `audit-ci.jsonc` allowlist entry. Do NOT add a
-# blanket rule disable; scope every ignore to the exact file:line and say
-# why it is safe.
-
-rules:
-  cache-poisoning:
-    ignore:
-      # publish.yml setup-node. Low-confidence heuristic: zizmor flags
-      # actions/setup-node by identity in any release/publish workflow
-      # because it is caching-capable. We pass NO `cache:` input on the
-      # publish path (removed deliberately — see the comment there), so
-      # setup-node restores/saves no cache and there is no artifact a
-      # lower-trust trigger could poison. The job also does a fresh
-      # `pnpm install --frozen-lockfile` + build. Residual risk: nil.
-      - publish.yml:52
+# No config-file ignores. Suppress findings inline at the callsite with
+# `# zizmor: ignore[rule]` so the scope is the single step and a human
+# re-reviews if it moves. Never disable a rule globally here.
+rules: {}

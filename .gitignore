@@ -48,6 +48,5 @@ yarn-error.log*
 *.swp
 # Wrangler local state (Workers runtime smoke)
 .wrangler/
-
 # Claude Code per-user state
 .claude/
