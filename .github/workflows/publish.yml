@@ -48,6 +48,11 @@ jobs:
         with:
           run_install: false
 
+      # zizmor: ignore[cache-poisoning] — no `cache:` input on the publish
+      # path (see the rationale below); setup-node restores/saves nothing, so
+      # there is no artifact a lower-trust trigger could poison. Inline
+      # rather than a .github/zizmor.yml file:line entry: line-anchored
+      # ignores silently break whenever lines above shift.
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24 # .nvmrc; >= 22.14.0 required for trusted publishing

@@ -29,8 +29,8 @@
     "provenance": true
   },
   "repository": {
-    "url": "git+https://github.com/auditlocker/sdk-js.git",
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/auditlocker/sdk-js.git"
   },
   "type": "module",
   "tshy": {

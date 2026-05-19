@@ -1,19 +1,17 @@
 # zizmor configuration — https://docs.zizmor.sh/configuration/
 #
 # CI runs `zizmor --persona=auditor --offline`; zizmor auto-discovers this
-# file. Entries here are per-finding, documented risk acceptance — the
-# zizmor analogue of an `audit-ci.jsonc` allowlist entry. Do NOT add a
-# blanket rule disable; scope every ignore to the exact file:line and say
-# why it is safe.
+# file. Documented per-finding risk acceptance — the zizmor analogue of an
+# `audit-ci.jsonc` allowlist entry. Do NOT add a blanket rule disable.
+#
+# Convention: line-anchored findings are suppressed with an inline
+# `# zizmor: ignore[rule]` comment at the callsite, NOT a `file:line` entry
+# here — file:line entries silently stop matching whenever lines above the
+# finding shift (an unrelated edit then re-triggers the finding). Use this
+# file only for findings with no stable single-line anchor.
+#
+# Current inline ignores:
+#   - publish.yml: cache-poisoning on actions/setup-node (no `cache:` input
+#     on the publish path; nothing to poison).
 
-rules:
-  cache-poisoning:
-    ignore:
-      # publish.yml setup-node. Low-confidence heuristic: zizmor flags
-      # actions/setup-node by identity in any release/publish workflow
-      # because it is caching-capable. We pass NO `cache:` input on the
-      # publish path (removed deliberately — see the comment there), so
-      # setup-node restores/saves no cache and there is no artifact a
-      # lower-trust trigger could poison. The job also does a fresh
-      # `pnpm install --frozen-lockfile` + build. Residual risk: nil.
-      - publish.yml:52
+rules: {}
