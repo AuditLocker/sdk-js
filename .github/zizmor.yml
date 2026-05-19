@@ -1,17 +1,7 @@
-# zizmor configuration — https://docs.zizmor.sh/configuration/
+# zizmor config — https://docs.zizmor.sh/configuration/
+# CI runs `zizmor --persona=auditor --offline` (auto-discovers this file).
 #
-# CI runs `zizmor --persona=auditor --offline`; zizmor auto-discovers this
-# file. Documented per-finding risk acceptance — the zizmor analogue of an
-# `audit-ci.jsonc` allowlist entry. Do NOT add a blanket rule disable.
-#
-# Convention: line-anchored findings are suppressed with an inline
-# `# zizmor: ignore[rule]` comment at the callsite, NOT a `file:line` entry
-# here — file:line entries silently stop matching whenever lines above the
-# finding shift (an unrelated edit then re-triggers the finding). Use this
-# file only for findings with no stable single-line anchor.
-#
-# Current inline ignores:
-#   - publish.yml: cache-poisoning on actions/setup-node (no `cache:` input
-#     on the publish path; nothing to poison).
-
+# No config-file ignores. Suppress findings inline at the callsite with
+# `# zizmor: ignore[rule]` so the scope is the single step and a human
+# re-reviews if it moves. Never disable a rule globally here.
 rules: {}
