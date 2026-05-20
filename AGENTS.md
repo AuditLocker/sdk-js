@@ -11,7 +11,7 @@ Operational guide for AI agents (Claude Code, Cursor, Aider, Codex CLI) and huma
 - `src/` — **generated** SDK source (sdk/, funcs/, models/, hooks/, lib/, types/). Speakeasy-owned.
 - `test/` — hand-written vitest suite. `method-names.test.ts` is the method-name snapshot gate; `cjs-require.test.ts` proves the dual-emit CJS entry; `runtime-smoke.mjs` is the cross-runtime import smoke.
 - `.speakeasy/gen.yaml` — SDK-shaping config (generation-time decisions). Speakeasy rewrites/reorders it on every run; edit deliberate keys and re-run.
-- `.speakeasy/workflow.yaml` — source + target. Pins `speakeasyVersion`. Spec source and registry are maintainer configuration — regeneration is a maintainer task (see `AGENTS.local.md` if you have it).
+- `.speakeasy/workflow.yaml` — source + target. Pins `speakeasyVersion`. Spec source and registry are maintainer configuration — regeneration is a maintainer task.
 - `.speakeasy/gen.lock` — generation checksums/feature versions. Committed.
 - `package.json` — Speakeasy owns name/version/type/exports/scripts(lint,build,prepublishOnly)/deps. Everything else is preserved via `additionalPackageJSON` / `additionalScripts` / `additionalDependencies` in `gen.yaml` — **edit those, not package.json directly** (direct edits are wiped on regen).
 - `pnpm-workspace.yaml` — all pnpm settings (pnpm 11 reads `.npmrc` for auth/registry only), supply-chain gates, `packages: ['.']` (required, see gotcha), and transitive-security `overrides`. Not Speakeasy-managed; edit directly.
@@ -57,8 +57,9 @@ pnpm run audit:ci                         # audit-ci (moderate+ threshold)
 ## Regenerating the SDK
 
 SDK regeneration (`speakeasy run`) is a **maintainer task** — it needs the
-Speakeasy workspace API key and the upstream OpenAPI spec. Maintainers: see
-`AGENTS.local.md`. Contributor-relevant invariants:
+Speakeasy workspace API key and the upstream OpenAPI spec. Maintainers have a
+separate runbook (`AGENTS.local.md`, gitignored). Contributor-relevant
+invariants:
 
 - **`speakeasy run --skip-versioning`** keeps `version` at `0.0.0`
   (pre-release, npm-name reservation only) — automatic versioning would
@@ -83,7 +84,7 @@ Settings live in `pnpm-workspace.yaml` with inline comments — read it directly
 - **audit-ci runs before `pnpm install` in CI** — `pnpm dlx`, not a devDependency.
 - **Dependabot cooldown** (`.github/dependabot.yml`): 7-day cooldown on all tiers.
 - **npm provenance:** `publishConfig.provenance: true` (preserved via `additionalPackageJSON`). Requires `id-token: write` in the publish job.
-- **`audit-ci.jsonc` allowlist is empty by design.** Transitive advisories are remediated by forcing patched versions in `pnpm-workspace.yaml` `overrides` (currently `vite ^8`, `postcss >=8.5.10` — the SDK never runs a Vite dev server, but we patch rather than allowlist). Adding an allowlist entry is per-advisory risk acceptance and is NOT done without discussion.
+- **`audit-ci.jsonc` allowlist is empty by design.** Transitive advisories are remediated by forcing patched versions in `pnpm-workspace.yaml` `overrides` (see that file for the current set — we patch rather than allowlist even when the affected code path isn't reachable in this SDK). Adding an allowlist entry is per-advisory risk acceptance and is NOT done without discussion.
 
 ## Gotchas
 
@@ -118,12 +119,6 @@ Node 20 EOL'd 2026-04-30; the SDK has zero published versions, so the floor was 
 ### `pnpm audit` vs `pnpm run audit:ci`
 
 `pnpm audit` — quick local feedback, no allowlist/threshold. `pnpm run audit:ci` — the exact CI invocation (threshold + config from `audit-ci.jsonc`). Script is `audit:ci` (not `audit`) to avoid shadowing the built-in.
-
-## When this guide goes stale
-
-If you upgrade pnpm across a major version, re-verify: `minimumReleaseAge` integer minutes; `strictDepBuilds` default-refuses; `blockExoticSubdeps` transitive-only; `trustPolicy: no-downgrade` exists; `verifyDepsBeforeRun: error` + the `packages: ['.']` interaction; `overrides` honoured; `pnpm audit --json` shape matches audit-ci v7; `pnpm publish --provenance` emits Sigstore. If any change, update this file and `pnpm-workspace.yaml` together.
-
-If you bump the Speakeasy pin, re-verify the four documented placement claims (pagination/retries/errors positions, `gen.yaml` typescript defaults) against the new version's docs before committing.
 
 ## Reference docs
 
